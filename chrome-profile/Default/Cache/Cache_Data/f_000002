@@ -1,0 +1,612 @@
+/**
+ * db.js
+ * LocalStorage Database Manager for Performance Evaluation Platform
+ */
+
+const STORAGE_KEYS = {
+    PROJECTS: 'perf_eval_projects',
+    EMPLOYEES: 'perf_eval_employees',
+    KPIS: 'perf_eval_kpis',
+    EVALUATIONS: 'perf_eval_evaluations',
+    SETTINGS: 'perf_eval_settings'
+};
+
+// Initial Seed Data
+const DEFAULT_PROJECTS = [
+    { id: 'p1', name: 'Project Titan', desc: 'Cloud migration and core platform revamp', status: 'Active' },
+    { id: 'p2', name: 'Project Nebula', desc: 'IoT analytics real-time dashboard', status: 'Active' },
+    { id: 'p3', name: 'Project Genesis', desc: 'E-commerce portal modernization and checkout upgrade', status: 'Active' }
+];
+
+const DEFAULT_EMPLOYEES = [
+    { id: 'e1', name: 'Alice Smith', email: 'alice.smith@delivery.com', role: 'Senior Developer', projectId: 'p1', projectIds: ['p1'], status: 'Active', designation: 'Senior React Architect', joiningDate: '2024-03-01', expertise: 'Senior' },
+    { id: 'e2', name: 'Bob Jones', email: 'bob.jones@delivery.com', role: 'Mid-Level Developer', projectId: 'p1', projectIds: ['p1'], status: 'Active', designation: 'Full-Stack Developer', joiningDate: '2025-01-10', expertise: 'Intermediate' },
+    { id: 'e3', name: 'Charlie Brown', email: 'charlie.brown@delivery.com', role: 'Junior Developer', projectId: 'p2', projectIds: ['p2'], status: 'Active', designation: 'Frontend Intern', joiningDate: '2025-11-01', expertise: 'Junior' },
+    { id: 'e4', name: 'Diana Prince', email: 'diana.prince@delivery.com', role: 'QA Engineer', projectId: 'p1', projectIds: ['p1'], status: 'Active', designation: 'Lead QA Automation Engineer', joiningDate: '2024-08-15', expertise: 'Expert' },
+    { id: 'e5', name: 'Ethan Hunt', email: 'ethan.hunt@delivery.com', role: 'Team Lead', projectId: 'p1', projectIds: ['p1'], status: 'Active', designation: 'Delivery Manager & Tech Lead', joiningDate: '2023-06-01', expertise: 'Lead' },
+    { id: 'e6', name: 'Fiona Gallagher', email: 'fiona.gallagher@delivery.com', role: 'QA Engineer', projectId: 'p2', projectIds: ['p2'], status: 'Active', designation: 'QA Analyst', joiningDate: '2025-05-12', expertise: 'Intermediate' },
+    { id: 'e7', name: 'George Clark', email: 'george.clark@delivery.com', role: 'Mid-Level Developer', projectId: 'p3', projectIds: ['p3'], status: 'Active', designation: 'Backend Java Developer', joiningDate: '2025-02-28', expertise: 'Intermediate' },
+    { id: 'e8', name: 'Hannah Abbott', email: 'hannah.abbott@delivery.com', role: 'Senior Developer', projectId: 'p3', projectIds: ['p3'], status: 'Active', designation: 'Technical Architect', joiningDate: '2024-02-01', expertise: 'Senior' }
+];
+
+const DEFAULT_KPIS = {
+    common: [
+        { id: 'kpi-adherence', category: 'High Impact Delivery', kra: 'Adherence to Effort Estimate & Project Plan', desc: 'Delivering tasks on schedule and taking ownership of commitments.', kpi: '≥95% committed items completed on time', weight: 10 },
+        { id: 'kpi-bugs', category: 'High Impact Delivery', kra: 'Application Bugs', desc: 'Writing high quality code to minimize production issues.', kpi: '100% months with zero critical production bugs, Defect rate ≤ 0.02', weight: 15 },
+        { id: 'kpi-escalations', category: 'High Impact Delivery', kra: 'Customer Escalations', desc: 'Resolving customer inquiries and avoiding escalations.', kpi: '100% escalation-free sprints', weight: 10 },
+        { id: 'kpi-csat', category: 'High Impact Delivery', kra: 'Customer Satisfaction', desc: 'Ensuring client/delivery expectations are met.', kpi: 'Average customer satisfaction ≥ 4.6/5', weight: 10 },
+        { id: 'kpi-quality', category: 'High Impact Delivery', kra: 'Quality Attributes', desc: 'Maintaining high code standards and peer reviews.', kpi: '≥97% PRs merged without major rework, Test coverage ≥80%', weight: 10 },
+        { id: 'kpi-agile', category: 'Best Platform / Best Solution', kra: 'Agile Development', desc: 'Following Scrum ceremonies and sprint hygiene.', kpi: 'Process adherence rate', weight: 5 },
+        { id: 'kpi-compliance', category: 'Best Platform / Best Solution', kra: 'Compliance', desc: 'Adhering to internal delivery standards.', kpi: 'Compliance score', weight: 5 },
+        { id: 'kpi-security', category: 'Best Platform / Best Solution', kra: 'Security', desc: 'Adhering to safety standards and code analysis.', kpi: 'Production vulnerabilities rate', weight: 5 },
+        { id: 'kpi-tech-invest', category: 'Best Platform / Best Solution', kra: 'Technology Investment', desc: 'Coding modernizations and tech contributions.', kpi: 'Contributions metric', weight: 5 },
+        { id: 'kpi-accountability', category: 'High Performing Team', kra: 'Accountability', desc: 'Taking responsibility for deliverables and goals.', kpi: 'Commitments met rate', weight: 10 },
+        { id: 'kpi-coordination', category: 'High Performing Team', kra: 'Coordination/Collaboration', desc: 'Fostering developer alignment and teamwork.', kpi: 'Meaningful contributions/month', weight: 5 },
+        { id: 'kpi-culture', category: 'High Performing Team', kra: 'Culture', desc: 'Fostering a positive team dynamic.', kpi: 'Positive feedback rate', weight: 5 },
+        { id: 'kpi-productivity', category: 'Productivity', kra: 'Benchmark', desc: 'Optimizing developer velocity and utilization.', kpi: 'Underutilized report rate', weight: 5 }
+    ],
+    targets: {
+        'Senior Developer': {
+            'kpi-adherence': { target: '0 missed commitments', weight: 10 },
+            'kpi-bugs': { target: '0 bugs', weight: 15 },
+            'kpi-escalations': { target: '0 escalations', weight: 10 },
+            'kpi-csat': { target: '5/5', weight: 10 },
+            'kpi-quality': { target: '0 major PR rework', weight: 10 },
+            'kpi-agile': { target: '≥95% adherence', weight: 5 },
+            'kpi-compliance': { target: '≥98% compliance', weight: 5 },
+            'kpi-security': { target: 'No vulnerabilities in production, ≤1 high vulnerability', weight: 5 },
+            'kpi-tech-invest': { target: '≥1 meaningful contribution/month', weight: 5 },
+            'kpi-accountability': { target: '≥95% commitments met', weight: 10 },
+            'kpi-coordination': { target: '2–3 meaningful contributions/month', weight: 5 },
+            'kpi-culture': { target: '≥95% positive feedback', weight: 5 },
+            'kpi-productivity': { target: '0 underutilized report', weight: 5 }
+        },
+        'Mid Senior Role': {
+            'kpi-adherence': { target: '≤1 missed commitment', weight: 10 },
+            'kpi-bugs': { target: '0 critical production bugs', weight: 15 },
+            'kpi-escalations': { target: '0 escalations', weight: 10 },
+            'kpi-csat': { target: '≥4.8/5', weight: 10 },
+            'kpi-quality': { target: '≤1 major PR rework', weight: 10 },
+            'kpi-agile': { target: '≥90% adherence', weight: 5 },
+            'kpi-compliance': { target: '≥95% compliance', weight: 5 },
+            'kpi-security': { target: '≤2 high vulnerabilities', weight: 5 },
+            'kpi-tech-invest': { target: '≥1 meaningful contribution/month', weight: 5 },
+            'kpi-accountability': { target: '≥90% commitments met', weight: 10 },
+            'kpi-coordination': { target: '1-2 meaningful contributions/month', weight: 5 },
+            'kpi-culture': { target: '≥90% positive feedback', weight: 5 },
+            'kpi-productivity': { target: '0 underutilized report', weight: 5 }
+        },
+        'Junior Developer': {
+            'kpi-adherence': { target: '≤2 missed commitments', weight: 10 },
+            'kpi-bugs': { target: '0 critical production bugs', weight: 15 },
+            'kpi-escalations': { target: '≤1 escalation', weight: 10 },
+            'kpi-csat': { target: '≥4.5/5', weight: 10 },
+            'kpi-quality': { target: '≤2 major PR reworks', weight: 10 },
+            'kpi-agile': { target: '≥85% adherence', weight: 5 },
+            'kpi-compliance': { target: '≥90% compliance', weight: 5 },
+            'kpi-security': { target: '≤3 high vulnerabilities', weight: 5 },
+            'kpi-tech-invest': { target: '1 contribution/2 months', weight: 5 },
+            'kpi-accountability': { target: '≥85% commitments met', weight: 10 },
+            'kpi-coordination': { target: '1 meaningful contribution/month', weight: 5 },
+            'kpi-culture': { target: '≥85% positive feedback', weight: 5 },
+            'kpi-productivity': { target: '0 underutilized report', weight: 5 }
+        },
+        'QA Engineer': {
+            'kpi-adherence': { target: '0 missed commitments', weight: 10 },
+            'kpi-bugs': { target: '0 bugs', weight: 15 },
+            'kpi-escalations': { target: '0 escalations', weight: 10 },
+            'kpi-csat': { target: '5/5', weight: 10 },
+            'kpi-quality': { target: '0 major bugs leaked', weight: 10 },
+            'kpi-agile': { target: '≥95% adherence', weight: 5 },
+            'kpi-compliance': { target: '≥98% compliance', weight: 5 },
+            'kpi-security': { target: '0 vulnerabilities missed', weight: 5 },
+            'kpi-tech-invest': { target: '≥1 test framework contribution/month', weight: 5 },
+            'kpi-accountability': { target: '≥95% test commitments met', weight: 10 },
+            'kpi-coordination': { target: '2–3 meaningful QA reviews/month', weight: 5 },
+            'kpi-culture': { target: '≥95% positive feedback', weight: 5 },
+            'kpi-productivity': { target: '0 underutilized reports', weight: 5 }
+        },
+        'Team Lead': {
+            'kpi-adherence': { target: '0 missed team milestones', weight: 10 },
+            'kpi-bugs': { target: '0 blocker releases', weight: 15 },
+            'kpi-escalations': { target: '0 customer escalations', weight: 10 },
+            'kpi-csat': { target: '5/5 team average', weight: 10 },
+            'kpi-quality': { target: '0 unreviewed code gateways', weight: 10 },
+            'kpi-agile': { target: '100% ceremony governance', weight: 5 },
+            'kpi-compliance': { target: '≥98% audit compliance', weight: 5 },
+            'kpi-security': { target: '0 production vulnerabilities', weight: 5 },
+            'kpi-tech-invest': { target: '≥2 architecture contributions/month', weight: 5 },
+            'kpi-accountability': { target: '≥95% team sprint velocities', weight: 10 },
+            'kpi-coordination': { target: 'Client communications managed successfully', weight: 5 },
+            'kpi-culture': { target: '≥95% positive team feedback', weight: 5 },
+            'kpi-productivity': { target: '0 underutilized report', weight: 5 }
+        },
+        'Business Analyst': {
+            'kpi-adherence': { target: '0 missed commitments', weight: 10 },
+            'kpi-bugs': { target: '0 defects due to requirements gaps', weight: 15 },
+            'kpi-escalations': { target: '0 client escalations', weight: 10 },
+            'kpi-csat': { target: '≥4.8/5 client satisfaction feedback', weight: 10 },
+            'kpi-quality': { target: 'High quality specification documents and user stories', weight: 10 },
+            'kpi-agile': { target: '100% sprint backlog hygiene', weight: 5 },
+            'kpi-compliance': { target: '≥98% process compliance', weight: 5 },
+            'kpi-security': { target: '0 access policy violations', weight: 5 },
+            'kpi-tech-invest': { target: 'BA domain knowledge sharing', weight: 5 },
+            'kpi-accountability': { target: '≥95% commitments met', weight: 10 },
+            'kpi-coordination': { target: 'Effective coordination between client and engineering', weight: 5 },
+            'kpi-culture': { target: '≥95% positive team feedback', weight: 5 },
+            'kpi-productivity': { target: '0 underutilized tasks', weight: 5 }
+        }
+    }
+};
+
+// Seed evaluations for March, April, May 2026
+const DEFAULT_EVALUATIONS = [
+    // Alice Smith (Senior Developer) - p1
+    {
+        id: 'ev-1',
+        employeeId: 'e1',
+        projectId: 'p1',
+        period: '2026-03',
+        scores: {
+            'kpi-adherence': 4.5,
+            'kpi-bugs': 4.0,
+            'kpi-escalations': 4.0,
+            'kpi-csat': 4.5,
+            'kpi-quality': 4.5,
+            'kpi-agile': 4.0,
+            'kpi-compliance': 4.5,
+            'kpi-security': 4.5,
+            'kpi-tech-invest': 4.0,
+            'kpi-accountability': 4.5,
+            'kpi-coordination': 4.5,
+            'kpi-culture': 4.5,
+            'kpi-productivity': 4.0
+        },
+        weightedScore: 4.35,
+        aiComments: "Alice performed exceptionally well in March 2026. She demonstrated outstanding code quality on the core database migration tasks. Her leadership within the Project Titan dev team helped onboard team members smoothly. To improve further, she can focus on increasing automated unit test coverage.",
+        improvementAreas: "Expand automated unit tests.",
+        status: 'Approved',
+        evaluatedBy: 'Jayasree Kuniyil',
+        updatedAt: '2026-03-28T10:00:00Z'
+    },
+    {
+        id: 'ev-2',
+        employeeId: 'e1',
+        projectId: 'p1',
+        period: '2026-04',
+        scores: {
+            'kpi-adherence': 4.8,
+            'kpi-bugs': 4.5,
+            'kpi-escalations': 4.5,
+            'kpi-csat': 4.8,
+            'kpi-quality': 4.8,
+            'kpi-agile': 4.5,
+            'kpi-compliance': 4.8,
+            'kpi-security': 4.8,
+            'kpi-tech-invest': 4.5,
+            'kpi-accountability': 4.8,
+            'kpi-coordination': 4.8,
+            'kpi-culture': 4.8,
+            'kpi-productivity': 4.5
+        },
+        weightedScore: 4.68,
+        aiComments: "Alice continues to lead key initiatives under Project Titan. Her architectural planning for the cloud migration was exemplary, saving the team hours of rework. She shows high autonomy, resolving complex containerization issues on her own. She is actively mentoring Bob and Charlie.",
+        improvementAreas: "Establish architectural guidelines documentation.",
+        status: 'Approved',
+        evaluatedBy: 'Jayasree Kuniyil',
+        updatedAt: '2026-04-29T11:15:00Z'
+    },
+    {
+        id: 'ev-3',
+        employeeId: 'e1',
+        projectId: 'p1',
+        period: '2026-05',
+        scores: {
+            'kpi-adherence': 5.0,
+            'kpi-bugs': 4.8,
+            'kpi-escalations': 4.8,
+            'kpi-csat': 5.0,
+            'kpi-quality': 5.0,
+            'kpi-agile': 4.8,
+            'kpi-compliance': 5.0,
+            'kpi-security': 5.0,
+            'kpi-tech-invest': 4.8,
+            'kpi-accountability': 5.0,
+            'kpi-coordination': 4.8,
+            'kpi-culture': 5.0,
+            'kpi-productivity': 4.8
+        },
+        weightedScore: 4.91,
+        aiComments: "Outstanding performance this month! Alice has driven the deployment of the Cloud API Gateway ahead of schedule. Her code quality was flawless. She continues to be a pillar of reliability and technical strength for the team. Highly proactive in sharing knowledge.",
+        improvementAreas: "Present a technical seminar on the new API architecture to the wider delivery group.",
+        status: 'Approved',
+        evaluatedBy: 'Jayasree Kuniyil',
+        updatedAt: '2026-05-28T09:30:00Z'
+    },
+    // Bob Jones (Mid-Level Developer) - p1
+    {
+        id: 'ev-4',
+        employeeId: 'e2',
+        projectId: 'p1',
+        period: '2026-03',
+        scores: {
+            'kpi-adherence': 3.5,
+            'kpi-bugs': 3.5,
+            'kpi-escalations': 3.0,
+            'kpi-csat': 3.5,
+            'kpi-quality': 3.5,
+            'kpi-agile': 3.5,
+            'kpi-compliance': 3.5,
+            'kpi-security': 3.5,
+            'kpi-tech-invest': 3.0,
+            'kpi-accountability': 3.5,
+            'kpi-coordination': 3.5,
+            'kpi-culture': 3.5,
+            'kpi-productivity': 3.0
+        },
+        weightedScore: 3.40,
+        aiComments: "Bob showed solid teamwork and willingness to learn in March. He adapted well to the new Docker environments. He completed his sprint tasks on time, though code reviews highlighted a need to pay closer attention to standard styling practices and logging guidelines.",
+        improvementAreas: "Focus on style linting and logging frameworks.",
+        status: 'Approved',
+        evaluatedBy: 'Jayasree Kuniyil',
+        updatedAt: '2026-03-28T10:30:00Z'
+    },
+    {
+        id: 'ev-5',
+        employeeId: 'e2',
+        projectId: 'p1',
+        period: '2026-04',
+        scores: {
+            'kpi-adherence': 3.8,
+            'kpi-bugs': 3.8,
+            'kpi-escalations': 3.5,
+            'kpi-csat': 3.8,
+            'kpi-quality': 3.8,
+            'kpi-agile': 3.8,
+            'kpi-compliance': 3.8,
+            'kpi-security': 3.8,
+            'kpi-tech-invest': 3.5,
+            'kpi-accountability': 3.8,
+            'kpi-coordination': 3.8,
+            'kpi-culture': 3.8,
+            'kpi-productivity': 3.5
+        },
+        weightedScore: 3.73,
+        aiComments: "Bob is making steady progress. He successfully delivered the Redis caching service with minimal code corrections needed. His responsiveness to peer review feedback has improved. He is encouraged to attempt solving trickier debugging tasks independently before raising blockages.",
+        improvementAreas: "Strengthen independent debugging skills.",
+        status: 'Approved',
+        evaluatedBy: 'Jayasree Kuniyil',
+        updatedAt: '2026-04-29T14:00:00Z'
+    },
+    {
+        id: 'ev-6',
+        employeeId: 'e2',
+        projectId: 'p1',
+        period: '2026-05',
+        scores: {
+            'kpi-adherence': 4.0,
+            'kpi-bugs': 4.0,
+            'kpi-escalations': 3.8,
+            'kpi-csat': 4.0,
+            'kpi-quality': 4.0,
+            'kpi-agile': 4.0,
+            'kpi-compliance': 4.0,
+            'kpi-security': 4.0,
+            'kpi-tech-invest': 3.8,
+            'kpi-accountability': 4.0,
+            'kpi-coordination': 4.0,
+            'kpi-culture': 4.0,
+            'kpi-productivity': 3.8
+        },
+        weightedScore: 3.96,
+        aiComments: "A very strong month for Bob. He is stepping up to take on more complex features, showing good adaptation to the backend message queue implementation. He delivered his tasks before the sprint freeze and has become more vocal in sharing constructive feedback in stand-ups.",
+        improvementAreas: "Contribute to database schema optimization tasks in the next cycle.",
+        status: 'Approved',
+        evaluatedBy: 'Jayasree Kuniyil',
+        updatedAt: '2026-05-28T14:45:00Z'
+    }
+];
+
+const DEFAULT_SETTINGS = {
+    managerName: 'Jayasree Kuniyil',
+    managerRole: 'Senior Delivery Manager',
+    openaiApiKey: '',
+    openaiEndpoint: 'https://api.openai.com/v1',
+    openaiModel: 'gpt-4o',
+    azureEnabled: false,
+    azureDeploymentName: ''
+};
+
+// Database class definition
+class Database {
+    constructor() {
+        this.init();
+    }
+
+    // Calculate dynamic experience in years & months
+    calculateExperience(joiningDateStr) {
+        if (!joiningDateStr) return '0 mos';
+        const joinDate = new Date(joiningDateStr);
+        const now = new Date();
+        
+        let months = (now.getFullYear() - joinDate.getFullYear()) * 12;
+        months -= joinDate.getMonth();
+        months += now.getMonth();
+        
+        if (now.getDate() < joinDate.getDate()) {
+            months--; 
+        }
+        
+        if (months < 0) return '0 mos';
+        
+        const yrs = Math.floor(months / 12);
+        const mos = months % 12;
+        
+        if (yrs === 0) {
+            return `${mos} mo${mos !== 1 ? 's' : ''}`;
+        } else {
+            return `${yrs} yr${yrs !== 1 ? 's' : ''} ${mos} mo${mos !== 1 ? 's' : ''}`;
+        }
+    }
+
+    init() {
+        if (!localStorage.getItem(STORAGE_KEYS.PROJECTS)) {
+            localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(DEFAULT_PROJECTS));
+        }
+        
+        // Migration check: Reset employees if they use old schema without designation or joiningDate
+        let resetEmployees = false;
+        try {
+            const currentEmps = JSON.parse(localStorage.getItem(STORAGE_KEYS.EMPLOYEES));
+            if (currentEmps && currentEmps.length > 0 && !currentEmps[0].joiningDate) {
+                resetEmployees = true;
+            }
+        } catch(e) {
+            resetEmployees = true;
+        }
+
+        if (!localStorage.getItem(STORAGE_KEYS.EMPLOYEES) || resetEmployees) {
+            localStorage.setItem(STORAGE_KEYS.EMPLOYEES, JSON.stringify(DEFAULT_EMPLOYEES));
+        }
+
+        // Migration check for multiple projects: add projectIds array if missing
+        try {
+            const currentEmps = JSON.parse(localStorage.getItem(STORAGE_KEYS.EMPLOYEES));
+            if (currentEmps && currentEmps.length > 0) {
+                let migrated = false;
+                const updatedEmps = currentEmps.map(emp => {
+                    if (!emp.projectIds) {
+                        emp.projectIds = emp.projectId ? [emp.projectId] : [];
+                        migrated = true;
+                    }
+                    return emp;
+                });
+                if (migrated) {
+                    localStorage.setItem(STORAGE_KEYS.EMPLOYEES, JSON.stringify(updatedEmps));
+                }
+            }
+        } catch (e) {
+            console.error("Failed to migrate employees project structure", e);
+        }
+
+        // Migration check: Reset KPIs and Evaluations if they use old schema (missing common property)
+        let resetKpis = false;
+        try {
+            const currentKpis = JSON.parse(localStorage.getItem(STORAGE_KEYS.KPIS));
+            if (currentKpis && !currentKpis.common) {
+                resetKpis = true;
+            }
+        } catch(e) {
+            resetKpis = true;
+        }
+
+        if (!localStorage.getItem(STORAGE_KEYS.KPIS) || resetKpis) {
+            localStorage.setItem(STORAGE_KEYS.KPIS, JSON.stringify(DEFAULT_KPIS));
+            localStorage.setItem(STORAGE_KEYS.EVALUATIONS, JSON.stringify(DEFAULT_EVALUATIONS));
+        } else {
+            // Migration check for Business Analyst: seed targets if missing
+            try {
+                const currentKpis = JSON.parse(localStorage.getItem(STORAGE_KEYS.KPIS));
+                if (currentKpis && currentKpis.targets && !currentKpis.targets['Business Analyst']) {
+                    currentKpis.targets['Business Analyst'] = DEFAULT_KPIS.targets['Business Analyst'];
+                    localStorage.setItem(STORAGE_KEYS.KPIS, JSON.stringify(currentKpis));
+                }
+            } catch (e) {
+                console.error("Failed to migrate KPIs structure for Business Analyst", e);
+            }
+            if (!localStorage.getItem(STORAGE_KEYS.EVALUATIONS)) {
+                localStorage.setItem(STORAGE_KEYS.EVALUATIONS, JSON.stringify(DEFAULT_EVALUATIONS));
+            }
+        }
+
+        if (!localStorage.getItem(STORAGE_KEYS.SETTINGS)) {
+            localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(DEFAULT_SETTINGS));
+        }
+    }
+
+    // Reset database to default seed data
+    resetToDefaults() {
+        localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(DEFAULT_PROJECTS));
+        localStorage.setItem(STORAGE_KEYS.EMPLOYEES, JSON.stringify(DEFAULT_EMPLOYEES));
+        localStorage.setItem(STORAGE_KEYS.KPIS, JSON.stringify(DEFAULT_KPIS));
+        localStorage.setItem(STORAGE_KEYS.EVALUATIONS, JSON.stringify(DEFAULT_EVALUATIONS));
+        localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(DEFAULT_SETTINGS));
+    }
+
+    // Projects CRUD
+    getProjects() {
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.PROJECTS)) || [];
+    }
+
+    saveProjects(projects) {
+        localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(projects));
+    }
+
+    addProject(project) {
+        const projects = this.getProjects();
+        project.id = 'p_' + Date.now();
+        projects.push(project);
+        this.saveProjects(projects);
+        return project;
+    }
+
+    updateProject(updatedProject) {
+        let projects = this.getProjects();
+        projects = projects.map(p => p.id === updatedProject.id ? updatedProject : p);
+        this.saveProjects(projects);
+    }
+
+    deleteProject(id) {
+        let projects = this.getProjects();
+        projects = projects.filter(p => p.id !== id);
+        this.saveProjects(projects);
+        
+        // Unassign employees from this project
+        let employees = this.getEmployees();
+        employees = employees.map(emp => {
+            if (emp.projectId === id) {
+                emp.projectId = ''; // Unassigned
+            }
+            if (emp.projectIds) {
+                emp.projectIds = emp.projectIds.filter(pid => pid !== id);
+            }
+            return emp;
+        });
+        this.saveEmployees(employees);
+    }
+
+    // Employees CRUD
+    getEmployees() {
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.EMPLOYEES)) || [];
+    }
+
+    saveEmployees(employees) {
+        localStorage.setItem(STORAGE_KEYS.EMPLOYEES, JSON.stringify(employees));
+    }
+
+    addEmployee(employee) {
+        const employees = this.getEmployees();
+        employee.id = 'e_' + Date.now();
+        employees.push(employee);
+        this.saveEmployees(employees);
+        return employee;
+    }
+
+    updateEmployee(updatedEmployee) {
+        let employees = this.getEmployees();
+        employees = employees.map(e => e.id === updatedEmployee.id ? updatedEmployee : e);
+        this.saveEmployees(employees);
+    }
+
+    deleteEmployee(id) {
+        let employees = this.getEmployees();
+        employees = employees.filter(e => e.id !== id);
+        this.saveEmployees(employees);
+
+        // Delete evaluations associated with this employee
+        let evals = this.getEvaluations();
+        evals = evals.filter(ev => ev.employeeId !== id);
+        this.saveEvaluations(evals);
+    }
+
+    // KPI Configurations CRUD
+    getKPIs() {
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.KPIS)) || {};
+    }
+
+    saveKPIs(kpis) {
+        localStorage.setItem(STORAGE_KEYS.KPIS, JSON.stringify(kpis));
+    }
+
+    getKPIsByRole(role) {
+        const allKPIs = this.getKPIs();
+        const common = allKPIs.common || [];
+        const roleTargets = (allKPIs.targets && allKPIs.targets[role]) || {};
+        
+        return common.map(kpi => {
+            const config = roleTargets[kpi.id];
+            
+            // Allow override of weight or target if stored in DB
+            let weight = kpi.weight;
+            let target = kpi.kpi; // Fallback to common KPI detail text
+            
+            if (config) {
+                if (typeof config.weight !== 'undefined') weight = config.weight;
+                if (typeof config.target !== 'undefined') target = config.target;
+            }
+            
+            return {
+                id: kpi.id,
+                category: kpi.category,
+                kra: kpi.kra,
+                name: kpi.kra, // Use KRA Name for display name
+                desc: kpi.desc,
+                kpi: kpi.kpi,
+                weight: weight,
+                target: target
+            };
+        });
+    }
+
+    updateKPIsForRole(role, kpiArray) {
+        const allKPIs = this.getKPIs();
+        if (!allKPIs.targets) allKPIs.targets = {};
+        if (!allKPIs.targets[role]) allKPIs.targets[role] = {};
+        
+        kpiArray.forEach(kpi => {
+            allKPIs.targets[role][kpi.id] = {
+                target: kpi.target,
+                weight: kpi.weight
+            };
+        });
+        
+        this.saveKPIs(allKPIs);
+    }
+
+    // Evaluations CRUD
+    getEvaluations() {
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.EVALUATIONS)) || [];
+    }
+
+    saveEvaluations(evals) {
+        localStorage.setItem(STORAGE_KEYS.EVALUATIONS, JSON.stringify(evals));
+    }
+
+    addEvaluation(evaluation) {
+        const evals = this.getEvaluations();
+        
+        // Check if evaluation already exists for this employee and period
+        const existingIndex = evals.findIndex(ev => ev.employeeId === evaluation.employeeId && ev.period === evaluation.period);
+        
+        evaluation.updatedAt = new Date().toISOString();
+        
+        if (existingIndex > -1) {
+            evaluation.id = evals[existingIndex].id;
+            evals[existingIndex] = evaluation;
+        } else {
+            evaluation.id = 'ev_' + Date.now();
+            evals.push(evaluation);
+        }
+        
+        this.saveEvaluations(evals);
+        return evaluation;
+    }
+
+    deleteEvaluation(id) {
+        let evals = this.getEvaluations();
+        evals = evals.filter(ev => ev.id !== id);
+        this.saveEvaluations(evals);
+    }
+
+    // Settings
+    getSettings() {
+        return JSON.parse(localStorage.getItem(STORAGE_KEYS.SETTINGS)) || DEFAULT_SETTINGS;
+    }
+
+    saveSettings(settings) {
+        localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
+    }
+}
+
+// Attach Database to window object
+window.DB = new Database();

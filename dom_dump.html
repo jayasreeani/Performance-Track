@@ -1,0 +1,1992 @@
+[23416:32556:0610/175801.492:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR
+[23416:32556:0610/175801.492:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR
+[23416:32556:0610/175801.515:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        window.onerror = function(message, source, lineno, colno, error) {
+            var errDiv = document.createElement('div');
+            errDiv.style.position = 'fixed';
+            errDiv.style.top = '0';
+            errDiv.style.left = '0';
+            errDiv.style.width = '100%';
+            errDiv.style.backgroundColor = 'red';
+            errDiv.style.color = 'white';
+            errDiv.style.zIndex = '99999';
+            errDiv.style.padding = '20px';
+            errDiv.style.fontSize = '16px';
+            errDiv.style.fontWeight = 'bold';
+            errDiv.style.whiteSpace = 'pre-wrap';
+            errDiv.innerHTML = 'JS ERROR: ' + message + ' at ' + source + ':' + lineno + ':' + colno + (error && error.stack ? '<br>' + error.stack : '');
+            document.body.appendChild(errDiv);
+            return false;
+        };
+    </script>
+    <title>PerfAI - AI-Powered KPI &amp; Performance Management</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#0b0f19',
+                        panelbg: 'rgba(20, 27, 45, 0.7)',
+                        borderglow: 'rgba(139, 92, 246, 0.2)'
+                    },
+                    fontSize: {
+                        '3xs': '0.6rem',
+                        '2xs': '0.7rem'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom Style System -->
+    <link rel="stylesheet" href="styles.css">
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.left-3{left:0.75rem}.top-2\.5{top:0.625rem}.z-10{z-index:10}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-4{margin-top:1rem;margin-bottom:1rem}.mb-1{margin-bottom:0.25rem}.mb-1\.5{margin-bottom:0.375rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.ml-auto{margin-left:auto}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-4{margin-top:1rem}.mr-3{margin-right:0.75rem}.mt-0\.5{margin-top:0.125rem}.mt-3{margin-top:0.75rem}.mt-6{margin-top:1.5rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-1\.5{height:0.375rem}.h-10{height:2.5rem}.h-12{height:3rem}.h-14{height:3.5rem}.h-2{height:0.5rem}.h-24{height:6rem}.h-28{height:7rem}.h-3\.5{height:0.875rem}.h-4{height:1rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.h-64{height:16rem}.h-9{height:2.25rem}.h-96{height:24rem}.h-full{height:100%}.h-px{height:1px}.h-3{height:0.75rem}.max-h-32{max-height:8rem}.min-h-screen{min-height:100vh}.min-h-\[120px\]{min-height:120px}.w-1\.5{width:0.375rem}.w-10{width:2.5rem}.w-12{width:3rem}.w-14{width:3.5rem}.w-2{width:0.5rem}.w-24{width:6rem}.w-28{width:7rem}.w-3\.5{width:0.875rem}.w-4{width:1rem}.w-40{width:10rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-64{width:16rem}.w-9{width:2.25rem}.w-full{width:100%}.w-3{width:0.75rem}.max-w-4xl{max-width:56rem}.max-w-7xl{max-width:80rem}.max-w-\[150px\]{max-width:150px}.max-w-md{max-width:28rem}.shrink-0{flex-shrink:0}.flex-grow{flex-grow:1}.border-collapse{border-collapse:collapse}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}@keyframes spin{to{transform:rotate(360deg)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-0\.5{gap:0.125rem}.gap-1{gap:0.25rem}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.space-y-8 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-4{border-width:4px}.border-b{border-bottom-width:1px}.border-b-2{border-bottom-width:2px}.border-r{border-right-width:1px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-blue-500{--tw-border-opacity:1;border-color:rgb(59 130 246 / var(--tw-border-opacity, 1))}.border-emerald-500{--tw-border-opacity:1;border-color:rgb(16 185 129 / var(--tw-border-opacity, 1))}.border-gray-700{--tw-border-opacity:1;border-color:rgb(55 65 81 / var(--tw-border-opacity, 1))}.border-gray-800{--tw-border-opacity:1;border-color:rgb(31 41 55 / var(--tw-border-opacity, 1))}.border-green-900{--tw-border-opacity:1;border-color:rgb(20 83 45 / var(--tw-border-opacity, 1))}.border-purple-500{--tw-border-opacity:1;border-color:rgb(168 85 247 / var(--tw-border-opacity, 1))}.border-purple-600{--tw-border-opacity:1;border-color:rgb(147 51 234 / var(--tw-border-opacity, 1))}.border-purple-900{--tw-border-opacity:1;border-color:rgb(88 28 135 / var(--tw-border-opacity, 1))}.border-red-900{--tw-border-opacity:1;border-color:rgb(127 29 29 / var(--tw-border-opacity, 1))}.border-yellow-500{--tw-border-opacity:1;border-color:rgb(234 179 8 / var(--tw-border-opacity, 1))}.border-opacity-25{--tw-border-opacity:0.25}.border-opacity-50{--tw-border-opacity:0.5}.bg-\[\#00a4ef\]{--tw-bg-opacity:1;background-color:rgb(0 164 239 / var(--tw-bg-opacity, 1))}.bg-\[\#0b0f19\]{--tw-bg-opacity:1;background-color:rgb(11 15 25 / var(--tw-bg-opacity, 1))}.bg-\[\#7fba00\]{--tw-bg-opacity:1;background-color:rgb(127 186 0 / var(--tw-bg-opacity, 1))}.bg-\[\#f25022\]{--tw-bg-opacity:1;background-color:rgb(242 80 34 / var(--tw-bg-opacity, 1))}.bg-\[\#ffb900\]{--tw-bg-opacity:1;background-color:rgb(255 185 0 / var(--tw-bg-opacity, 1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0 / var(--tw-bg-opacity, 1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246 / var(--tw-bg-opacity, 1))}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-gray-800{--tw-bg-opacity:1;background-color:rgb(31 41 55 / var(--tw-bg-opacity, 1))}.bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39 / var(--tw-bg-opacity, 1))}.bg-gray-950{--tw-bg-opacity:1;background-color:rgb(3 7 18 / var(--tw-bg-opacity, 1))}.bg-green-950{--tw-bg-opacity:1;background-color:rgb(5 46 22 / var(--tw-bg-opacity, 1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247 / var(--tw-bg-opacity, 1))}.bg-purple-600{--tw-bg-opacity:1;background-color:rgb(147 51 234 / var(--tw-bg-opacity, 1))}.bg-purple-700{--tw-bg-opacity:1;background-color:rgb(126 34 206 / var(--tw-bg-opacity, 1))}.bg-purple-950{--tw-bg-opacity:1;background-color:rgb(59 7 100 / var(--tw-bg-opacity, 1))}.bg-red-950{--tw-bg-opacity:1;background-color:rgb(69 10 10 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-yellow-500{--tw-bg-opacity:1;background-color:rgb(234 179 8 / var(--tw-bg-opacity, 1))}.bg-opacity-10{--tw-bg-opacity:0.1}.bg-opacity-20{--tw-bg-opacity:0.2}.bg-opacity-30{--tw-bg-opacity:0.3}.bg-opacity-35{--tw-bg-opacity:0.35}.bg-opacity-40{--tw-bg-opacity:0.4}.bg-opacity-65{--tw-bg-opacity:0.65}.bg-opacity-75{--tw-bg-opacity:0.75}.bg-opacity-50{--tw-bg-opacity:0.5}.bg-\[radial-gradient\(circle_at_center\2c rgba\(139\2c 92\2c 246\2c 0\.15\)\2c transparent_60\%\)\]{background-image:radial-gradient(circle at center,rgba(139,92,246,0.15),transparent 60%)}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-purple-400{--tw-gradient-from:#c084fc var(--tw-gradient-from-position);--tw-gradient-to:rgb(192 132 252 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-purple-600{--tw-gradient-from:#9333ea var(--tw-gradient-from-position);--tw-gradient-to:rgb(147 51 234 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-gray-400{--tw-gradient-to:#9ca3af var(--tw-gradient-to-position)}.to-indigo-300{--tw-gradient-to:#a5b4fc var(--tw-gradient-to-position)}.to-indigo-600{--tw-gradient-to:#4f46e5 var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.p-1\.5{padding:0.375rem}.p-2{padding:0.5rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.py-8{padding-top:2rem;padding-bottom:2rem}.pb-2{padding-bottom:0.5rem}.pb-3{padding-bottom:0.75rem}.pb-4{padding-bottom:1rem}.pb-6{padding-bottom:1.5rem}.pl-9{padding-left:2.25rem}.pr-2{padding-right:0.5rem}.pr-3{padding-right:0.75rem}.pt-1{padding-top:0.25rem}.pt-2{padding-top:0.5rem}.pt-3{padding-top:0.75rem}.pt-4{padding-top:1rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.text-2xl{font-size:1.5rem;line-height:2rem}.text-2xs{font-size:0.7rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-3xs{font-size:0.6rem}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.tracking-wide{letter-spacing:0.025em}.tracking-wider{letter-spacing:0.05em}.tracking-widest{letter-spacing:0.1em}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-gray-100{--tw-text-opacity:1;color:rgb(243 244 246 / var(--tw-text-opacity, 1))}.text-gray-200{--tw-text-opacity:1;color:rgb(229 231 235 / var(--tw-text-opacity, 1))}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity, 1))}.text-green-400{--tw-text-opacity:1;color:rgb(74 222 128 / var(--tw-text-opacity, 1))}.text-green-500{--tw-text-opacity:1;color:rgb(34 197 94 / var(--tw-text-opacity, 1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254 / var(--tw-text-opacity, 1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252 / var(--tw-text-opacity, 1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247 / var(--tw-text-opacity, 1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234 / var(--tw-text-opacity, 1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-yellow-400{--tw-text-opacity:1;color:rgb(250 204 21 / var(--tw-text-opacity, 1))}.text-yellow-500{--tw-text-opacity:1;color:rgb(234 179 8 / var(--tw-text-opacity, 1))}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_0_12px_rgba\(139\2c 92\2c 246\2c 0\.3\)\]{--tw-shadow:0 0 12px rgba(139,92,246,0.3);--tw-shadow-colored:0 0 12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_0_15px_rgba\(139\2c 92\2c 246\2c 0\.3\)\]{--tw-shadow:0 0 15px rgba(139,92,246,0.3);--tw-shadow-colored:0 0 15px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:border-gray-700:hover{--tw-border-opacity:1;border-color:rgb(55 65 81 / var(--tw-border-opacity, 1))}.hover\:bg-gray-100:hover{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-800:hover{--tw-bg-opacity:1;background-color:rgb(31 41 55 / var(--tw-bg-opacity, 1))}.hover\:bg-purple-500:hover{--tw-bg-opacity:1;background-color:rgb(168 85 247 / var(--tw-bg-opacity, 1))}.hover\:bg-red-900:hover{--tw-bg-opacity:1;background-color:rgb(127 29 29 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-950:hover{--tw-bg-opacity:1;background-color:rgb(3 7 18 / var(--tw-bg-opacity, 1))}.hover\:bg-opacity-40:hover{--tw-bg-opacity:0.4}.hover\:bg-opacity-50:hover{--tw-bg-opacity:0.5}.hover\:bg-opacity-30:hover{--tw-bg-opacity:0.3}.hover\:from-purple-500:hover{--tw-gradient-from:#a855f7 var(--tw-gradient-from-position);--tw-gradient-to:rgb(168 85 247 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:to-indigo-500:hover{--tw-gradient-to:#6366f1 var(--tw-gradient-to-position)}.hover\:text-gray-200:hover{--tw-text-opacity:1;color:rgb(229 231 235 / var(--tw-text-opacity, 1))}.hover\:text-red-300:hover{--tw-text-opacity:1;color:rgb(252 165 165 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:text-purple-300:hover{--tw-text-opacity:1;color:rgb(216 180 254 / var(--tw-text-opacity, 1))}.focus\:ring-purple-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(168 85 247 / var(--tw-ring-opacity, 1))}@media (min-width: 640px){.sm\:w-64{width:16rem}.sm\:flex-grow-0{flex-grow:0}.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}}@media (min-width: 768px){.md\:col-span-2{grid-column:span 2 / span 2}.md\:mt-0{margin-top:0px}.md\:w-64{width:16rem}.md\:w-auto{width:auto}.md\:w-32{width:8rem}.md\:flex-grow-0{flex-grow:0}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:items-center{align-items:center}.md\:gap-6{gap:1.5rem}.md\:gap-8{gap:2rem}.md\:p-8{padding:2rem}.md\:text-right{text-align:right}.md\:text-3xl{font-size:1.875rem;line-height:2.25rem}}@media (min-width: 1024px){.lg\:sticky{position:sticky}.lg\:top-6{top:1.5rem}.lg\:col-span-2{grid-column:span 2 / span 2}.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}}</style></head>
+<body class="min-h-screen flex flex-col md:flex-row antialiased">
+    <!-- Login Screen (Azure AD Mock) -->
+    <div id="login-screen" class="fixed inset-0 z-50 bg-[#0b0f19] flex items-center justify-center p-4 hidden">
+        <!-- Radial background glow -->
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(139,92,246,0.15),transparent_60%)] pointer-events-none"></div>
+        
+        <div class="w-full max-w-md glass-card-no-hover p-8 rounded-2xl border border-gray-800 shadow-2xl relative z-10 space-y-6">
+            <!-- Header Logo -->
+            <div class="text-center space-y-2">
+                <div class="mx-auto w-12 h-12 rounded-xl bg-purple-600 bg-opacity-20 border border-purple-500 shadow-[0_0_15px_rgba(139,92,246,0.3)] flex items-center justify-center mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="brain-circuit" aria-hidden="true" class="lucide lucide-brain-circuit w-6 h-6 text-purple-400 animate-pulse"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"></path><path d="M9 13a4.5 4.5 0 0 0 3-4"></path><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"></path><path d="M3.477 10.896a4 4 0 0 1 .585-.396"></path><path d="M6 18a4 4 0 0 1-1.967-.516"></path><path d="M12 13h4"></path><path d="M12 18h6a2 2 0 0 1 2 2v1"></path><path d="M12 8h8"></path><path d="M16 8V5a2 2 0 0 1 2-2"></path><circle cx="16" cy="13" r=".5"></circle><circle cx="18" cy="3" r=".5"></circle><circle cx="20" cy="21" r=".5"></circle><circle cx="20" cy="8" r=".5"></circle></svg>
+                </div>
+                <h1 class="text-2xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-300">
+                    PerfAI Portal
+                </h1>
+                <p class="text-xs text-gray-400">KPI Performance Management &amp; Evaluation Hub</p>
+            </div>
+
+            <!-- Login Form / Actions -->
+            <div id="login-form-container" class="space-y-4">
+                <!-- Microsoft SSO Button -->
+                <button type="button" id="sso-login-btn" class="w-full py-3 px-4 bg-white hover:bg-gray-100 text-gray-900 text-sm font-bold rounded-xl flex items-center justify-center gap-3 transition shadow-lg">
+                    <!-- Microsoft Grid Icon (4 squares) -->
+                    <div class="grid grid-cols-2 gap-0.5 w-4 h-4 shrink-0">
+                        <div class="bg-[#f25022] w-1.5 h-1.5"></div>
+                        <div class="bg-[#7fba00] w-1.5 h-1.5"></div>
+                        <div class="bg-[#00a4ef] w-1.5 h-1.5"></div>
+                        <div class="bg-[#ffb900] w-1.5 h-1.5"></div>
+                    </div>
+                    <span>Sign in with Microsoft SSO</span>
+                </button>
+
+                <!-- Divider -->
+                <div class="flex items-center gap-3 my-4">
+                    <div class="h-px bg-gray-800 flex-grow"></div>
+                    <span class="text-3xs font-bold text-gray-500 uppercase tracking-wider">or local credentials</span>
+                    <div class="h-px bg-gray-800 flex-grow"></div>
+                </div>
+
+                <!-- Local Login Form -->
+                <form id="local-login-form" class="space-y-4">
+                    <div>
+                        <label class="block text-3xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Manager Username</label>
+                        <input type="text" id="login-username" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="E.g., jayasree.kuniyil@delivery.com" value="jayasree.kuniyil@delivery.com">
+                    </div>
+                    <div>
+                        <label class="block text-3xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Access Token / Password</label>
+                        <input type="password" id="login-password" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="••••••••" value="delivery123">
+                    </div>
+                    <button type="submit" class="w-full py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold rounded-xl transition shadow-md">
+                        Authorize Local Access
+                    </button>
+                </form>
+            </div>
+
+            <!-- Loader State (Initially Hidden) -->
+            <div id="login-loader" class="hidden flex flex-col items-center justify-center py-8 text-center space-y-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="loader-2" aria-hidden="true" class="lucide lucide-loader-2 w-10 h-10 animate-spin text-purple-500 animate-duration-1000"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
+                <div>
+                    <h3 id="login-loader-title" class="font-bold text-sm text-gray-200">Connecting to Azure Active Directory...</h3>
+                    <p id="login-loader-desc" class="text-3xs text-gray-500 mt-1">Verifying Microsoft Single Sign-On (SSO) token...</p>
+                </div>
+                <!-- Mock MFA verification step -->
+                <div id="mfa-approval-step" class="hidden p-3 bg-green-950 bg-opacity-20 border border-green-900 text-green-400 rounded-xl flex items-center gap-2 text-2xs font-semibold">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shield-check" aria-hidden="true" class="lucide lucide-shield-check w-4 h-4 text-green-500"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                    <span>Multi-Factor Authentication Approved!</span>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <p class="text-3xs text-gray-600">Secure corporate login protected by Azure AD SSO.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-full md:w-64 glass-card-no-hover border-r border-gray-800 flex flex-col justify-between shrink-0 no-print">
+        <div>
+            <!-- Header Logo -->
+            <div class="px-6 py-6 border-b border-gray-800 flex items-center gap-3">
+                <div class="p-2 rounded-xl bg-purple-600 bg-opacity-20 border border-purple-500 shadow-[0_0_12px_rgba(139,92,246,0.3)]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="brain-circuit" aria-hidden="true" class="lucide lucide-brain-circuit w-6 h-6 text-purple-400 animate-pulse"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"></path><path d="M9 13a4.5 4.5 0 0 0 3-4"></path><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"></path><path d="M3.477 10.896a4 4 0 0 1 .585-.396"></path><path d="M6 18a4 4 0 0 1-1.967-.516"></path><path d="M12 13h4"></path><path d="M12 18h6a2 2 0 0 1 2 2v1"></path><path d="M12 8h8"></path><path d="M16 8V5a2 2 0 0 1 2-2"></path><circle cx="16" cy="13" r=".5"></circle><circle cx="18" cy="3" r=".5"></circle><circle cx="20" cy="21" r=".5"></circle><circle cx="20" cy="8" r=".5"></circle></svg>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-lg tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-300">
+                        PerfAI
+                    </h1>
+                    <p class="text-3xs text-gray-500 font-bold uppercase tracking-widest">Performance hub</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="px-3 py-6 space-y-1">
+                <a href="#" class="nav-link active flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 hover:bg-opacity-40 transition" data-view="dashboard">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="layout-dashboard" aria-hidden="true" class="lucide lucide-layout-dashboard w-4.5 h-4.5"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 hover:bg-opacity-40 transition" data-view="evaluations">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-spreadsheet" aria-hidden="true" class="lucide lucide-file-spreadsheet w-4.5 h-4.5"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M8 13h2"></path><path d="M14 13h2"></path><path d="M8 17h2"></path><path d="M14 17h2"></path></svg>
+                    <span>Perform Evaluation</span>
+                </a>
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 hover:bg-opacity-40 transition" data-view="history">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="history" aria-hidden="true" class="lucide lucide-history w-4.5 h-4.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M12 7v5l4 2"></path></svg>
+                    <span>History &amp; Reports</span>
+                </a>
+                <div class="pt-4 pb-2 px-4 text-3xs font-bold text-gray-500 uppercase tracking-wider">Management</div>
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 hover:bg-opacity-40 transition" data-view="projects">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="folder-kanban" aria-hidden="true" class="lucide lucide-folder-kanban w-4.5 h-4.5"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"></path><path d="M8 10v4"></path><path d="M12 10v2"></path><path d="M16 10v6"></path></svg>
+                    <span>Projects</span>
+                </a>
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 hover:bg-opacity-40 transition" data-view="employees">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="users" aria-hidden="true" class="lucide lucide-users w-4.5 h-4.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                    <span>Team Directory</span>
+                </a>
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 hover:bg-opacity-40 transition" data-view="kpis">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sliders" aria-hidden="true" class="lucide lucide-sliders w-4.5 h-4.5"><path d="M10 8h4"></path><path d="M12 21v-9"></path><path d="M12 8V3"></path><path d="M17 16h4"></path><path d="M19 12V3"></path><path d="M19 21v-5"></path><path d="M3 14h4"></path><path d="M5 10V3"></path><path d="M5 21v-7"></path></svg>
+                    <span>KPI Frameworks</span>
+                </a>
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 hover:bg-opacity-40 transition" data-view="settings">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="settings" aria-hidden="true" class="lucide lucide-settings w-4.5 h-4.5"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer / Manager Profile & Theme & Log out -->
+        <div class="p-4 border-t border-gray-800 space-y-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-purple-700 bg-opacity-30 border border-purple-600 flex items-center justify-center font-bold text-sm text-purple-300">
+                        JK
+                    </div>
+                    <div>
+                        <div id="manager-name-display" class="font-bold text-sm text-gray-200">Jayasree Kuniyil</div>
+                        <div id="manager-role-display" class="text-3xs text-gray-500">Senior Delivery Manager</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-2">
+                <a href="#" id="theme-toggle" class="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-gray-900 bg-opacity-65 border border-gray-800 hover:border-gray-700 hover:bg-gray-800 text-2xs font-semibold text-gray-400 hover:text-gray-200 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sun" aria-hidden="true" id="theme-icon" class="lucide lucide-sun w-3.5 h-3.5 text-yellow-400"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+                    <span id="theme-text">Light Mode</span>
+                </a>
+                <a href="#" id="logout-btn" class="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-red-950 bg-opacity-35 border border-red-900 border-opacity-50 hover:bg-red-900 hover:bg-opacity-40 text-2xs font-semibold text-red-400 hover:text-red-300 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="log-out" aria-hidden="true" class="lucide lucide-log-out w-3.5 h-3.5 shrink-0"><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path></svg>
+                    <span>Log Out</span>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Workspace Container -->
+    <main class="flex-grow p-6 md:p-8 overflow-y-auto max-w-7xl mx-auto w-full">
+        <!-- ------------------------------------------------------------- -->
+        <!-- VIEW: DASHBOARD -->
+        <!-- ------------------------------------------------------------- -->
+        <section id="dashboard-view" class="view-section active space-y-8">
+            <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-gray-800 pb-6 no-print">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-gray-150 to-gray-400" id="dashboard-title">
+                        Performance Tracker
+                    </h2>
+                    <p class="text-xs text-gray-400 mt-1" id="dashboard-subtitle">Monthly employee performance analytics - <span id="total-records-count">6</span> records</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1.5 text-xs text-gray-400 font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
+                        <span>Updated June 2026</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Filters -->
+            <div id="dashboard-filters-row" class="glass-card-no-hover p-4 rounded-xl flex flex-wrap items-center gap-4 no-print border border-gray-800">
+                <div class="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-wider pr-2 border-r border-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="filter" aria-hidden="true" class="lucide lucide-filter w-4 h-4 text-gray-400"><path d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z"></path></svg>
+                    <span>Filters</span>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4 items-center flex-grow sm:flex-grow-0">
+                    <div class="flex items-center gap-2">
+                        <span class="text-3xs text-gray-500 font-bold uppercase tracking-wider">Project</span>
+                        <select id="db-filter-project" class="p-2 text-xs glass-input rounded-lg font-semibold w-40"><option value="">All Projects</option><option value="p1">Project Titan</option><option value="p2">Project Nebula</option><option value="p3">Project Genesis</option></select>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="text-3xs text-gray-500 font-bold uppercase tracking-wider">Team</span>
+                        <select id="db-filter-team" class="p-2 text-xs glass-input rounded-lg font-semibold w-40">
+                            <option value="">All Teams</option>
+                            <option value="Senior Developer">Senior Developer</option>
+                            <option value="Mid Senior Role">Mid Senior Role</option>
+                            <option value="Mid-Level Developer">Mid-Level Developer</option>
+                            <option value="Junior Developer">Junior Developer</option>
+                            <option value="QA Engineer">QA Engineer</option>
+                            <option value="Team Lead">Team Lead</option>
+                            <option value="Business Analyst">Business Analyst</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="text-3xs text-gray-500 font-bold uppercase tracking-wider">Month</span>
+                        <select id="db-filter-month" class="p-2 text-xs glass-input rounded-lg font-semibold w-40"><option value="">All Months</option><option value="2026-03">March 2026</option><option value="2026-04">April 2026</option><option value="2026-05">May 2026</option></select>
+                    </div>
+                </div>
+                
+                <button type="button" id="db-reset-filters-btn" class="ml-auto px-4 py-2 text-2xs font-bold bg-gray-900 border border-gray-800 rounded-lg hover:bg-gray-850 hover:border-gray-700 text-gray-400 hover:text-gray-200 transition">
+                    Clear Filters
+                </button>
+            </div>
+
+            <!-- Metric Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 no-print">
+                <!-- Card 1: Quality Score -->
+                <div class="glass-card p-5 rounded-2xl relative">
+                    <div class="flex items-center justify-between text-gray-400 mb-3">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Avg Quality Score</span>
+                        <div class="p-1.5 rounded-lg bg-yellow-500 bg-opacity-10 border border-yellow-500 border-opacity-25 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="star" aria-hidden="true" class="lucide lucide-star w-4.5 h-4.5 text-yellow-400"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg>
+                        </div>
+                    </div>
+                    <div id="stat-avg-quality" class="text-3xl font-extrabold text-white">85.3%</div>
+                    <div id="trend-avg-quality" class="text-3xs text-gray-500 font-bold mt-2 flex items-center gap-1"><span class="text-red-400 flex items-center gap-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trending-down" aria-hidden="true" class="lucide lucide-trending-down w-3 h-3 text-red-400"><path d="M16 17h6v-6"></path><path d="m22 17-8.5-8.5-5 5L2 7"></path></svg> -0.7% vs last month</span></div>
+                </div>
+
+                <!-- Card 2: On-Time Delivery -->
+                <div class="glass-card p-5 rounded-2xl relative">
+                    <div class="flex items-center justify-between text-gray-400 mb-3">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">On-Time Delivery</span>
+                        <div class="p-1.5 rounded-lg bg-emerald-500 bg-opacity-10 border border-emerald-500 border-opacity-25 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-square" aria-hidden="true" class="lucide lucide-check-square w-4.5 h-4.5 text-emerald-400"><path d="M21 10.656V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12.344"></path><path d="m9 11 3 3L22 4"></path></svg>
+                        </div>
+                    </div>
+                    <div id="stat-on-time" class="text-3xl font-extrabold text-white">85.3%</div>
+                    <div id="trend-on-time" class="text-3xs text-gray-500 font-bold mt-2 flex items-center gap-1"><span class="text-red-400 flex items-center gap-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trending-down" aria-hidden="true" class="lucide lucide-trending-down w-3 h-3 text-red-400"><path d="M16 17h6v-6"></path><path d="m22 17-8.5-8.5-5 5L2 7"></path></svg> -0.7% vs last month</span></div>
+                </div>
+
+                <!-- Card 3: Hours Logged -->
+                <div class="glass-card p-5 rounded-2xl relative">
+                    <div class="flex items-center justify-between text-gray-400 mb-3">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Total Hours Logged</span>
+                        <div class="p-1.5 rounded-lg bg-blue-500 bg-opacity-10 border border-blue-500 border-opacity-25 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" aria-hidden="true" class="lucide lucide-clock w-4.5 h-4.5 text-blue-400"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+                        </div>
+                    </div>
+                    <div id="stat-hours-logged" class="text-3xl font-extrabold text-white">939 hrs</div>
+                    <div id="trend-hours-logged" class="text-3xs text-gray-500 font-bold mt-2 flex items-center gap-1"><span class="text-emerald-400 flex items-center gap-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trending-up" aria-hidden="true" class="lucide lucide-trending-up w-3 h-3 text-emerald-400"><path d="M16 7h6v6"></path><path d="m22 7-8.5 8.5-5-5L2 17"></path></svg> +200.0% vs last month</span></div>
+                </div>
+
+                <!-- Card 4: Top Performers -->
+                <div class="glass-card p-5 rounded-2xl relative">
+                    <div class="flex items-center justify-between text-gray-400 mb-3">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Top Performers</span>
+                        <div class="p-1.5 rounded-lg bg-purple-500 bg-opacity-10 border border-purple-500 border-opacity-25 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="award" aria-hidden="true" class="lucide lucide-award w-4.5 h-4.5 text-purple-400"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg>
+                        </div>
+                    </div>
+                    <div id="stat-top-performers" class="text-3xl font-extrabold text-white">2 employees</div>
+                    <div id="trend-top-performers" class="text-3xs text-gray-500 font-bold mt-2 flex items-center gap-1"><span class="text-emerald-400 flex items-center gap-0.5"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trending-up" aria-hidden="true" class="lucide lucide-trending-up w-3 h-3 text-emerald-400"><path d="M16 7h6v6"></path><path d="m22 7-8.5 8.5-5-5L2 17"></path></svg> +1 vs last month</span></div>
+                </div>
+            </div>
+
+            <!-- Dashboard Sub Navigation Tabs -->
+            <div class="flex flex-wrap items-center gap-2 border-b border-gray-800 pb-3 no-print">
+                <button class="db-tab-btn active px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition" data-tab="overview">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="bar-chart-2" aria-hidden="true" class="lucide lucide-bar-chart-2 w-4 h-4"><path d="M5 21v-6"></path><path d="M12 21V3"></path><path d="M19 21V9"></path></svg>
+                    <span>Overview</span>
+                </button>
+                <button class="db-tab-btn px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 text-gray-400 hover:text-white hover:bg-gray-850 hover:bg-opacity-40 transition" data-tab="trends">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trending-up" aria-hidden="true" class="lucide lucide-trending-up w-4 h-4"><path d="M16 7h6v6"></path><path d="m22 7-8.5 8.5-5-5L2 17"></path></svg>
+                    <span>Monthly Trends</span>
+                </button>
+                <button class="db-tab-btn px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 text-gray-400 hover:text-white hover:bg-gray-850 hover:bg-opacity-40 transition" data-tab="employee-wise">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="users" aria-hidden="true" class="lucide lucide-users w-4 h-4"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                    <span>Employee Wise</span>
+                </button>
+                <button class="db-tab-btn px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 text-gray-400 hover:text-white hover:bg-gray-850 hover:bg-opacity-40 transition" data-tab="employee-detail">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="user-check" aria-hidden="true" class="lucide lucide-user-check w-4 h-4"><path d="m16 11 2 2 4-4"></path><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                    <span>Employee Detail</span>
+                </button>
+            </div>
+
+            <!-- TAB CONTENT: OVERVIEW -->
+            <div id="db-tab-content-overview" class="db-tab-content space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 no-print">
+                    <!-- Left Column -->
+                    <div class="space-y-6">
+                        <!-- Chart 1: Monthly Avg Performance -->
+                        <div class="glass-card p-5 rounded-2xl">
+                            <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider mb-4">Monthly Avg Performance</h3>
+                            <div class="h-64 relative">
+                                <canvas id="chart-monthly-avg" width="666" height="256" style="display: block; box-sizing: border-box; height: 256px; width: 666px;"></canvas>
+                            </div>
+                        </div>
+                        
+                        <!-- Chart 2: Avg Hours Logged per Month -->
+                        <div class="glass-card p-5 rounded-2xl">
+                            <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider mb-4">Avg Hours Logged per Month</h3>
+                            <div class="h-64 relative">
+                                <canvas id="chart-hours-logged" width="666" height="256" style="display: block; box-sizing: border-box; height: 256px; width: 666px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column -->
+                    <div class="space-y-6">
+                        <!-- Chart 3: Rating Distribution -->
+                        <div class="glass-card p-5 rounded-2xl">
+                            <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider mb-4">Rating Distribution</h3>
+                            <div class="h-64 relative">
+                                <canvas id="chart-rating-dist" width="666" height="256" style="display: block; box-sizing: border-box; height: 256px; width: 666px;"></canvas>
+                            </div>
+                        </div>
+                        
+                        <!-- Chart 4: Performance by Project -->
+                        <div class="glass-card p-5 rounded-2xl">
+                            <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider mb-4">Performance by Project</h3>
+                            <div class="h-64 relative">
+                                <canvas id="chart-proj-perf" width="666" height="256" style="display: block; box-sizing: border-box; height: 256px; width: 666px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB CONTENT: MONTHLY TRENDS -->
+            <div id="db-tab-content-trends" class="db-tab-content hidden space-y-6">
+                <div class="glass-card p-5 rounded-2xl">
+                    <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider mb-4">Historical Performance Trends by Project</h3>
+                    <div class="h-96 relative">
+                        <canvas id="chart-detailed-trends"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB CONTENT: EMPLOYEE WISE -->
+            <div id="db-tab-content-employee-wise" class="db-tab-content hidden space-y-6">
+                <div class="glass-card p-5 rounded-2xl space-y-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                        <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider">Employee Performance Aggregates</h3>
+                        <div class="w-full sm:w-64 relative">
+                            <input type="text" id="db-employee-search" class="w-full pl-9 pr-3 py-2 text-xs glass-input rounded-xl" placeholder="Search employee by name...">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="search" aria-hidden="true" class="lucide lucide-search w-4 h-4 text-gray-500 absolute left-3 top-2.5"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-gray-800 bg-gray-900 bg-opacity-30">
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Employee</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Functional Role</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Overall Avg Score</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Avg Quality %</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Avg On-Time %</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Est. Hours Logged</th>
+                                </tr>
+                            </thead>
+                            <tbody id="db-employee-wise-table-body" class="divide-y divide-gray-850">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB CONTENT: EMPLOYEE DETAIL -->
+            <div id="db-tab-content-employee-detail" class="db-tab-content hidden space-y-6">
+                <div class="glass-card p-5 rounded-2xl flex flex-col sm:flex-row gap-4 items-center border border-gray-800">
+                    <label class="text-xs font-semibold text-gray-400">Select Employee for Detail View:</label>
+                    <select id="db-detail-employee-select" class="p-2 text-xs glass-input rounded-lg font-bold w-64"><option value="">-- Choose Employee --</option><option value="e1">Alice Smith (Senior Developer)</option><option value="e2">Bob Jones (Mid-Level Developer)</option><option value="e3">Charlie Brown (Junior Developer)</option><option value="e4">Diana Prince (QA Engineer)</option><option value="e5">Ethan Hunt (Team Lead)</option><option value="e6">Fiona Gallagher (QA Engineer)</option><option value="e7">George Clark (Mid-Level Developer)</option><option value="e8">Hannah Abbott (Senior Developer)</option></select>
+                </div>
+                
+                <div id="db-detail-workspace" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Profile Card -->
+                    <div class="glass-card p-6 rounded-2xl space-y-6">
+                        <div class="flex items-center gap-4 border-b border-gray-850 pb-4">
+                            <div class="w-14 h-14 rounded-full bg-purple-700 bg-opacity-30 border border-purple-500 flex items-center justify-center font-bold text-lg text-purple-300" id="db-detail-avatar">
+                                JD
+                            </div>
+                            <div>
+                                <h4 class="font-extrabold text-base text-gray-100" id="db-detail-name">John Doe</h4>
+                                <p class="text-xs text-purple-400 font-semibold" id="db-detail-designation">Senior Developer</p>
+                                <p class="text-3xs text-gray-500" id="db-detail-email">john.doe@delivery.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4 text-xs font-medium">
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">Functional Role:</span>
+                                <span class="text-gray-300 font-semibold" id="db-detail-role">Senior Developer</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">Expertise Level:</span>
+                                <span class="text-gray-300 font-semibold" id="db-detail-expertise">Senior</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">Total Experience:</span>
+                                <span class="text-purple-400 font-bold" id="db-detail-experience">2 yrs 4 mos</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">Joining Date:</span>
+                                <span class="text-gray-300" id="db-detail-join-date">March 1, 2024</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-500 block mb-1">Assigned Projects:</span>
+                                <div class="text-gray-300 font-semibold text-2xs leading-relaxed" id="db-detail-projects">
+                                    Project Titan
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- KPI Radar Chart -->
+                    <div class="glass-card p-5 rounded-2xl">
+                        <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider mb-4">KPI Performance Map</h3>
+                        <div class="h-64 relative">
+                            <canvas id="chart-detail-radar"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Score History Chart -->
+                    <div class="glass-card p-5 rounded-2xl">
+                        <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider mb-4">Score History Trend</h3>
+                        <div class="h-64 relative">
+                            <canvas id="chart-detail-history"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="db-detail-empty-state" class="text-center text-gray-500 py-16 bg-gray-900 bg-opacity-30 rounded-2xl border border-dashed border-gray-800">
+                    Select an employee above to load their performance dossier.
+                </div>
+            </div>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- VIEW: EVALUATIONS FORM -->
+        <!-- ------------------------------------------------------------- -->
+        <section id="evaluations-view" class="view-section space-y-8 no-print">
+            <header class="border-b border-gray-800 pb-6">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-150 to-gray-400">
+                    Monthly Performance Evaluation
+                </h2>
+                <p class="text-xs text-gray-400 mt-1">Select an employee, grade KPI categories, and generate AI-driven summaries.</p>
+            </header>
+
+            <form id="eval-form" class="space-y-8">
+                <!-- Select Metadata Grid -->
+                <div class="glass-card p-5 rounded-2xl grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1.5">1. Target Project</label>
+                        <select id="eval-project-select" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium"><option value="">-- Select Project --</option><option value="p1">Project Titan</option><option value="p2">Project Nebula</option><option value="p3">Project Genesis</option></select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1.5">2. Employee Name</label>
+                        <select id="eval-employee-select" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                            <option value="">-- Select Project First --</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1.5">3. Evaluation Period</label>
+                        <input type="month" id="eval-period" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1.5">4. Evaluator Name</label>
+                        <input type="text" id="evaluator-name" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="Manager Name">
+                    </div>
+                </div>
+
+                <!-- Main Evaluation Workspace -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                    <!-- Left: Sliders List (takes 2 cols on lg screens) -->
+                    <div class="lg:col-span-2 space-y-4" id="eval-kpis-container">
+                        <div class="text-center text-gray-500 py-8 bg-gray-900 bg-opacity-30 rounded-2xl border border-dashed border-gray-800">
+                            Select an employee to populate KPI indicators.
+                        </div>
+                    </div>
+
+                    <!-- Right: Live Weighted Score Card & AI Trigger -->
+                    <div class="space-y-6 lg:sticky lg:top-6">
+                        <!-- Score Gauge Widget -->
+                        <div class="glass-card p-6 rounded-2xl flex flex-col items-center text-center">
+                            <h3 class="font-bold text-xs uppercase tracking-wider text-gray-400 mb-4">Overall Weighted Score</h3>
+                            <div id="eval-weighted-score-gauge" class="score-circle text-2xl font-black rounded-full w-24 h-24 border-4 border-gray-700 bg-gray-900 flex items-center justify-center text-gray-500">
+                                <span id="eval-weighted-score-value">0.00</span>
+                            </div>
+                            <p class="text-3xs text-gray-500 mt-4 leading-relaxed">
+                                Weighted calculation automatically compiles based on configured role frameworks.
+                            </p>
+                        </div>
+
+                        <!-- AI Panel -->
+                        <div class="glass-card p-6 rounded-2xl space-y-4">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-bold text-xs uppercase tracking-wider text-gray-300">AI-Generated Feedback</h3>
+                                <button type="button" id="generate-ai-comments-btn" class="px-3 py-1.5 text-2xs font-bold text-white bg-purple-600 hover:bg-purple-500 rounded-lg flex items-center gap-1.5 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sparkles" aria-hidden="true" class="lucide lucide-sparkles w-3.5 h-3.5"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
+                                    <span>Compile Insights</span>
+                                </button>
+                            </div>
+
+                            <!-- Spinner loader -->
+                            <div id="ai-loading-spinner" class="hidden flex items-center justify-center gap-2 p-2 bg-purple-950 bg-opacity-20 border border-purple-900 border-opacity-50 text-purple-300 rounded-lg animate-pulse">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="loader-2" aria-hidden="true" class="lucide lucide-loader-2 w-4 h-4 animate-spin text-purple-400"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
+                                <span class="text-2xs font-semibold">Running AI feedback compiler...</span>
+                            </div>
+
+                            <div>
+                                <label class="block text-3xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Narrative Review</label>
+                                <textarea id="eval-ai-comments" class="w-full p-3 text-xs glass-input rounded-xl font-medium" rows="6" placeholder="Click 'Compile Insights' to generate performance summary..." required=""></textarea>
+                            </div>
+
+                            <div>
+                                <label class="block text-3xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Development Goals</label>
+                                <textarea id="eval-improvement-areas" class="w-full p-3 text-xs glass-input rounded-xl font-medium" rows="3" placeholder="Actionable milestones..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="w-full py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-sm font-bold rounded-2xl shadow-lg transition">
+                            Save Evaluation
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- VIEW: EVALUATIONS HISTORY -->
+        <!-- ------------------------------------------------------------- -->
+        <section id="history-view" class="view-section space-y-8 no-print">
+            <header class="border-b border-gray-800 pb-6">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-150 to-gray-400">
+                    Evaluations &amp; Reports
+                </h2>
+                <p class="text-xs text-gray-400 mt-1">View historical score breakdowns, print audit-ready reports, or export to CSV.</p>
+            </header>
+
+            <!-- Filter Panel -->
+            <div class="glass-card p-5 rounded-2xl flex flex-col md:flex-row gap-4 items-end">
+                <div class="flex-grow grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1.5">Project</label>
+                        <select id="filter-project" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium"><option value="">All Projects</option><option value="p1">Project Titan</option><option value="p2">Project Nebula</option><option value="p3">Project Genesis</option></select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1.5">Employee</label>
+                        <select id="filter-employee" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium"><option value="">All Employees</option><option value="e1">Alice Smith (Senior Developer)</option><option value="e2">Bob Jones (Mid-Level Developer)</option><option value="e3">Charlie Brown (Junior Developer)</option><option value="e4">Diana Prince (QA Engineer)</option><option value="e5">Ethan Hunt (Team Lead)</option><option value="e6">Fiona Gallagher (QA Engineer)</option><option value="e7">George Clark (Mid-Level Developer)</option><option value="e8">Hannah Abbott (Senior Developer)</option></select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1.5">Period</label>
+                        <input type="month" id="filter-period" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                    </div>
+                </div>
+                
+                <button type="button" id="reset-filters-btn" class="px-5 py-2.5 text-xs font-bold bg-gray-900 border border-gray-800 rounded-xl hover:bg-gray-850 hover:border-gray-700 text-gray-400 hover:text-gray-200 transition shrink-0">
+                    Reset Filters
+                </button>
+            </div>
+
+            <!-- History Table -->
+            <div class="glass-card overflow-hidden rounded-2xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-gray-800 bg-gray-900 bg-opacity-30">
+                                <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Employee</th>
+                                <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Project</th>
+                                <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Month</th>
+                                <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Weighted Score</th>
+                                <th class="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-gray-400">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body" class="divide-y divide-gray-850">
+                <tr class="border-b border-gray-800 hover:bg-gray-950 hover:bg-opacity-30">
+                    <td class="px-6 py-4 text-gray-200 text-sm">
+                        <div class="font-semibold text-gray-100">Alice Smith</div>
+                        <div class="text-xs text-gray-500">Senior Developer</div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-400 text-sm font-medium">Project Titan</td>
+                    <td class="px-6 py-4 text-gray-300 text-sm font-semibold">May 2026</td>
+                    <td class="px-6 py-4 text-sm">
+                        <span class="px-2.5 py-1 text-xs font-semibold rounded-md glow-badge-green">4.91</span>
+                    </td>
+                    <td class="px-6 py-4 text-right text-sm">
+                        <button class="view-report-btn text-purple-400 hover:text-purple-300 font-semibold mr-3 transition" data-id="ev-3">
+                            View Report
+                        </button>
+                        <button class="delete-eval-btn text-red-400 hover:text-red-300 transition" data-id="ev-3">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            
+                <tr class="border-b border-gray-800 hover:bg-gray-950 hover:bg-opacity-30">
+                    <td class="px-6 py-4 text-gray-200 text-sm">
+                        <div class="font-semibold text-gray-100">Bob Jones</div>
+                        <div class="text-xs text-gray-500">Mid-Level Developer</div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-400 text-sm font-medium">Project Titan</td>
+                    <td class="px-6 py-4 text-gray-300 text-sm font-semibold">May 2026</td>
+                    <td class="px-6 py-4 text-sm">
+                        <span class="px-2.5 py-1 text-xs font-semibold rounded-md glow-badge-yellow">3.96</span>
+                    </td>
+                    <td class="px-6 py-4 text-right text-sm">
+                        <button class="view-report-btn text-purple-400 hover:text-purple-300 font-semibold mr-3 transition" data-id="ev-6">
+                            View Report
+                        </button>
+                        <button class="delete-eval-btn text-red-400 hover:text-red-300 transition" data-id="ev-6">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            
+                <tr class="border-b border-gray-800 hover:bg-gray-950 hover:bg-opacity-30">
+                    <td class="px-6 py-4 text-gray-200 text-sm">
+                        <div class="font-semibold text-gray-100">Alice Smith</div>
+                        <div class="text-xs text-gray-500">Senior Developer</div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-400 text-sm font-medium">Project Titan</td>
+                    <td class="px-6 py-4 text-gray-300 text-sm font-semibold">April 2026</td>
+                    <td class="px-6 py-4 text-sm">
+                        <span class="px-2.5 py-1 text-xs font-semibold rounded-md glow-badge-green">4.68</span>
+                    </td>
+                    <td class="px-6 py-4 text-right text-sm">
+                        <button class="view-report-btn text-purple-400 hover:text-purple-300 font-semibold mr-3 transition" data-id="ev-2">
+                            View Report
+                        </button>
+                        <button class="delete-eval-btn text-red-400 hover:text-red-300 transition" data-id="ev-2">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            
+                <tr class="border-b border-gray-800 hover:bg-gray-950 hover:bg-opacity-30">
+                    <td class="px-6 py-4 text-gray-200 text-sm">
+                        <div class="font-semibold text-gray-100">Bob Jones</div>
+                        <div class="text-xs text-gray-500">Mid-Level Developer</div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-400 text-sm font-medium">Project Titan</td>
+                    <td class="px-6 py-4 text-gray-300 text-sm font-semibold">April 2026</td>
+                    <td class="px-6 py-4 text-sm">
+                        <span class="px-2.5 py-1 text-xs font-semibold rounded-md glow-badge-yellow">3.73</span>
+                    </td>
+                    <td class="px-6 py-4 text-right text-sm">
+                        <button class="view-report-btn text-purple-400 hover:text-purple-300 font-semibold mr-3 transition" data-id="ev-5">
+                            View Report
+                        </button>
+                        <button class="delete-eval-btn text-red-400 hover:text-red-300 transition" data-id="ev-5">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            
+                <tr class="border-b border-gray-800 hover:bg-gray-950 hover:bg-opacity-30">
+                    <td class="px-6 py-4 text-gray-200 text-sm">
+                        <div class="font-semibold text-gray-100">Alice Smith</div>
+                        <div class="text-xs text-gray-500">Senior Developer</div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-400 text-sm font-medium">Project Titan</td>
+                    <td class="px-6 py-4 text-gray-300 text-sm font-semibold">March 2026</td>
+                    <td class="px-6 py-4 text-sm">
+                        <span class="px-2.5 py-1 text-xs font-semibold rounded-md glow-badge-green">4.35</span>
+                    </td>
+                    <td class="px-6 py-4 text-right text-sm">
+                        <button class="view-report-btn text-purple-400 hover:text-purple-300 font-semibold mr-3 transition" data-id="ev-1">
+                            View Report
+                        </button>
+                        <button class="delete-eval-btn text-red-400 hover:text-red-300 transition" data-id="ev-1">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            
+                <tr class="border-b border-gray-800 hover:bg-gray-950 hover:bg-opacity-30">
+                    <td class="px-6 py-4 text-gray-200 text-sm">
+                        <div class="font-semibold text-gray-100">Bob Jones</div>
+                        <div class="text-xs text-gray-500">Mid-Level Developer</div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-400 text-sm font-medium">Project Titan</td>
+                    <td class="px-6 py-4 text-gray-300 text-sm font-semibold">March 2026</td>
+                    <td class="px-6 py-4 text-sm">
+                        <span class="px-2.5 py-1 text-xs font-semibold rounded-md glow-badge-yellow">3.40</span>
+                    </td>
+                    <td class="px-6 py-4 text-right text-sm">
+                        <button class="view-report-btn text-purple-400 hover:text-purple-300 font-semibold mr-3 transition" data-id="ev-4">
+                            View Report
+                        </button>
+                        <button class="delete-eval-btn text-red-400 hover:text-red-300 transition" data-id="ev-4">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- VIEW: PROJECTS CRUD -->
+        <!-- ------------------------------------------------------------- -->
+        <section id="projects-view" class="view-section space-y-8 no-print">
+            <header class="border-b border-gray-800 pb-6">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-150 to-gray-400">
+                    Project Management
+                </h2>
+                <p class="text-xs text-gray-400 mt-1">Configure client portfolios and tracking groups.</p>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                <!-- Left Form Panel -->
+                <div class="glass-card p-6 rounded-2xl space-y-5">
+                    <h3 id="project-form-title" class="font-bold text-sm uppercase tracking-wider text-gray-300">Add New Project</h3>
+                    <form id="project-form" class="space-y-4">
+                        <input type="hidden" id="project-id">
+                        
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Project Name</label>
+                            <input type="text" id="project-name" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="E.g., Project Titan" required="">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Description</label>
+                            <textarea id="project-desc" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" rows="3" placeholder="Enter objectives or brief summary..." required=""></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Status</label>
+                            <select id="project-status" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                                <option value="Active">Active</option>
+                                <option value="Completed">Completed</option>
+                                <option value="On Hold">On Hold</option>
+                            </select>
+                        </div>
+
+                        <div class="flex gap-3 pt-2">
+                            <button type="submit" class="flex-grow py-2.5 text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 rounded-xl transition">
+                                Save Project
+                            </button>
+                            <button type="button" id="project-cancel-btn" class="hidden px-4 py-2.5 text-xs font-bold bg-gray-900 border border-gray-800 rounded-xl hover:bg-gray-850 hover:border-gray-700 text-gray-400 hover:text-gray-200 transition">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Right Table List -->
+                <div class="lg:col-span-2 glass-card overflow-hidden rounded-2xl">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-gray-800 bg-gray-900 bg-opacity-30">
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Project Name</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Description</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Status</th>
+                                    <th class="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-gray-400">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="projects-table-body" class="divide-y divide-gray-850">
+            <tr class="border-b border-gray-800 hover:bg-gray-950 hover:bg-opacity-30">
+                <td class="px-6 py-4 font-semibold text-gray-200 text-sm">Project Titan</td>
+                <td class="px-6 py-4 text-gray-400 text-sm">Cloud migration and core platform revamp</td>
+                <td class="px-6 py-4 text-sm">
+                    <span class="px-2 py-0.5 text-xs font-semibold rounded-full glow-badge-green">
+                        Active
+                    </span>
+                </td>
+                <td class="px-6 py-4 text-right text-sm">
+                    <button class="edit-proj-btn text-purple-400 hover:text-purple-300 mr-3 transition" data-id="p1">
+                        Edit
+                    </button>
+                    <button class="delete-proj-btn text-red-400 hover:text-red-300 transition" data-id="p1">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        
+            <tr class="border-b border-gray-800 hover:bg-gray-950 hover:bg-opacity-30">
+                <td class="px-6 py-4 font-semibold text-gray-200 text-sm">Project Nebula</td>
+                <td class="px-6 py-4 text-gray-400 text-sm">IoT analytics real-time dashboard</td>
+                <td class="px-6 py-4 text-sm">
+                    <span class="px-2 py-0.5 text-xs font-semibold rounded-full glow-badge-green">
+                        Active
+                    </span>
+                </td>
+                <td class="px-6 py-4 text-right text-sm">
+                    <button class="edit-proj-btn text-purple-400 hover:text-purple-300 mr-3 transition" data-id="p2">
+                        Edit
+                    </button>
+                    <button class="delete-proj-btn text-red-400 hover:text-red-300 transition" data-id="p2">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        
+            <tr class="border-b border-gray-800 hover:bg-gray-950 hover:bg-opacity-30">
+                <td class="px-6 py-4 font-semibold text-gray-200 text-sm">Project Genesis</td>
+                <td class="px-6 py-4 text-gray-400 text-sm">E-commerce portal modernization and checkout upgrade</td>
+                <td class="px-6 py-4 text-sm">
+                    <span class="px-2 py-0.5 text-xs font-semibold rounded-full glow-badge-green">
+                        Active
+                    </span>
+                </td>
+                <td class="px-6 py-4 text-right text-sm">
+                    <button class="edit-proj-btn text-purple-400 hover:text-purple-300 mr-3 transition" data-id="p3">
+                        Edit
+                    </button>
+                    <button class="delete-proj-btn text-red-400 hover:text-red-300 transition" data-id="p3">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- VIEW: EMPLOYEES CRUD -->
+        <!-- ------------------------------------------------------------- -->
+        <section id="employees-view" class="view-section space-y-8 no-print">
+            <header class="border-b border-gray-800 pb-6">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-150 to-gray-400">
+                    Team Directory
+                </h2>
+                <p class="text-xs text-gray-400 mt-1">Manage staff assignments, roles, and project mappings.</p>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                <!-- Left Form Panel -->
+                <div class="glass-card p-6 rounded-2xl space-y-5">
+                    <h3 id="employee-form-title" class="font-bold text-sm uppercase tracking-wider text-gray-300">Add Team Member</h3>
+                    <form id="employee-form" class="space-y-4">
+                        <input type="hidden" id="employee-id">
+                        
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Full Name</label>
+                            <input type="text" id="employee-name" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="E.g., John Doe" required="">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Email Address</label>
+                            <input type="email" id="employee-email" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="john.doe@delivery.com" required="">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Designation</label>
+                            <input type="text" id="employee-designation" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="E.g., Senior Full-Stack Engineer" required="">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-400 mb-1.5">Functional Role <span class="text-gray-500 font-normal">(Optional)</span></label>
+                                <select id="employee-role" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                                    <option value="">-- No Role --</option>
+                                    <option value="Senior Developer">Senior Developer</option>
+                                    <option value="Mid Senior Role">Mid Senior Role</option>
+                                    <option value="Mid-Level Developer">Mid-Level Developer</option>
+                                    <option value="Junior Developer">Junior Developer</option>
+                                    <option value="QA Engineer">QA Engineer</option>
+                                    <option value="Team Lead">Team Lead</option>
+                                    <option value="Business Analyst">Business Analyst</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-400 mb-1.5">Expertise Level</label>
+                                <select id="employee-expertise" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                                    <option value="Junior">Junior</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Senior">Senior</option>
+                                    <option value="Expert">Expert</option>
+                                    <option value="Lead">Lead</option>
+                                    <option value="Management">Management</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-400 mb-1.5">Assigned Projects</label>
+                                <div id="employee-projects-container" class="w-full p-2.5 max-h-32 overflow-y-auto glass-input rounded-xl space-y-1">
+                    <label class="flex items-center gap-2 text-xs font-semibold text-gray-300 hover:text-white cursor-pointer py-0.5">
+                        <input type="checkbox" name="employee-projects" value="p1" class="rounded border-gray-750 bg-gray-900 text-purple-600 focus:ring-purple-500 w-4 h-4">
+                        <span>Project Titan</span>
+                    </label>
+                
+                    <label class="flex items-center gap-2 text-xs font-semibold text-gray-300 hover:text-white cursor-pointer py-0.5">
+                        <input type="checkbox" name="employee-projects" value="p2" class="rounded border-gray-750 bg-gray-900 text-purple-600 focus:ring-purple-500 w-4 h-4">
+                        <span>Project Nebula</span>
+                    </label>
+                
+                    <label class="flex items-center gap-2 text-xs font-semibold text-gray-300 hover:text-white cursor-pointer py-0.5">
+                        <input type="checkbox" name="employee-projects" value="p3" class="rounded border-gray-750 bg-gray-900 text-purple-600 focus:ring-purple-500 w-4 h-4">
+                        <span>Project Genesis</span>
+                    </label>
+                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-400 mb-1.5">Joining Date</label>
+                                <input type="date" id="employee-joining-date" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" required="">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Status</label>
+                            <select id="employee-status" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                        </div>
+
+                        <div class="flex gap-3 pt-2">
+                            <button type="submit" class="flex-grow py-2.5 text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 rounded-xl transition">
+                                Save Member
+                            </button>
+                            <button type="button" id="employee-cancel-btn" class="hidden px-4 py-2.5 text-xs font-bold bg-gray-900 border border-gray-800 rounded-xl hover:bg-gray-850 hover:border-gray-700 text-gray-400 hover:text-gray-200 transition">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Right Table List -->
+                <div class="lg:col-span-2 glass-card overflow-hidden rounded-2xl">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-gray-800 bg-gray-900 bg-opacity-30">
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Employee</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Role &amp; Expertise</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Projects</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Experience</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Status</th>
+                                    <th class="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-gray-400">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employees-table-body" class="divide-y divide-gray-850">
+                <tr class="border-b border-gray-800 hover:bg-gray-950 hover:bg-opacity-30">
+                    <td class="px-6 py-4 text-gray-200 text-sm">
+                        <div class="font-semibold">Alice Smith</div>
+                        <div class="text-xs text-gray-400">Senior React Architect</div>
+                        <div class="text-3xs text-gray-500 font-medium">alice.smith@delivery.com</div>
+                        <div class="text-3xs text-gray-400 mt-1"><span class="font-semibold text-gray-500">Joined:</span> Mar 1, 2024</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <div class="space-y-1">
+                            <span class="inline-block px-2 py-0.5 text-3xs font-semibold rounded bg-gray-900 border border-gray-800 text-gray-300">Senior Developer</span>
+                            <div>
+                                <span class="inline-block px-2 py-0.5 text-2xs font-semibold rounded-full glow-badge-green">Senior</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <div class="font-semibold text-gray-300 text-xs">Project Titan</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-semibold text-purple-400">
+                        2 yrs 3 mos
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <span class="px-2 py-0.5 text-xs font-semibold rounded-full glow-badge-green">
+                            Active
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-right text-sm">
+                        <button class="edit-emp-btn text-purple-400 hover:text-purple-300 mr-3 transition" data-id="e1">
+                            Edit
+                        </button>
+                        <button class="delete-emp-btn text-red-400 hover:text-red-300 transition" data-id="e1">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            
+                <tr class="border-b border-gray-800 hover:bg-gray-950 hover:bg-opacity-30">
+                    <td class="px-6 py-4 text-gray-200 text-sm">
+                        <div class="font-semibold">Bob Jones</div>
+                        <div class="text-xs text-gray-400">Full-Stack Developer</div>
+                        <div class="text-3xs text-gray-500 font-medium">bob.jones@delivery.com</div>
+                        <div class="text-3xs text-gray-400 mt-1"><span class="font-semibold text-gray-500">Joined:</span> Jan 10, 2025</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <div class="space-y-1">
+                            <span class="inline-block px-2 py-0.5 text-3xs font-semibold rounded bg-gray-900 border border-gray-800 text-gray-300">Mid-Level Developer</span>
+                            <div>
+                                <span class="inline-block px-2 py-0.5 text-2xs font-semibold rounded-full glow-badge-purple">Intermediate</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <div class="font-semibold text-gray-300 text-xs">Project Titan</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-semibold text-purple-400">
+                        1 yr 5 mos
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <span class="px-2 py-0.5 text-xs font-semibold rounded-full glow-badge-green">
+                            Active
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-right text-sm">
+                        <button class="edit-emp-btn text-purple-400 hover:text-purple-300 mr-3 transition" data-id="e2">
+                            Edit
+                        </button>
+                        <button class="delete-emp-btn text-red-400 hover:text-red-300 transition" data-id="e2">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            
+                <tr class="border-b border-gray-800 hover:bg-gray-950 hover:bg-opacity-30">
+                    <td class="px-6 py-4 text-gray-200 text-sm">
+                        <div class="font-semibold">Charlie Brown</div>
+                        <div class="text-xs text-gray-400">Frontend Intern</div>
+                        <div class="text-3xs text-gray-500 font-medium">charlie.brown@delivery.com</div>
+                        <div class="text-3xs text-gray-400 mt-1"><span class="font-semibold text-gray-500">Joined:</span> Nov 1, 2025</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <div class="space-y-1">
+                            <span class="inline-block px-2 py-0.5 text-3xs font-semibold rounded bg-gray-900 border border-gray-800 text-gray-300">Junior Developer</span>
+                            <div>
+                                <span class="inline-block px-2 py-0.5 text-2xs font-semibold rounded-full glow-badge-yellow">Junior</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <div class="font-semibold text-gray-300 text-xs">Project Nebula</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-semibold text-purple-400">
+                        7 mos
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <span class="px-2 py-0.5 text-xs font-semibold rounded-full glow-badge-green">
+                            Active
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-right text-sm">
+                        <button class="edit-emp-btn text-purple-400 hover:text-purple-300 mr-3 transition" data-id="e3">
+                            Edit
+                        </button>
+                        <button class="delete-emp-btn text-red-400 hover:text-red-300 transition" data-id="e3">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            
+                <tr class="border-b border-gray-800 hover:bg-gray-950 hover:bg-opacity-30">
+                    <td class="px-6 py-4 text-gray-200 text-sm">
+                        <div class="font-semibold">Diana Prince</div>
+                        <div class="text-xs text-gray-400">Lead QA Automation Engineer</div>
+                        <div class="text-3xs text-gray-500 font-medium">diana.prince@delivery.com</div>
+                        <div class="text-3xs text-gray-400 mt-1"><span class="font-semibold text-gray-500">Joined:</span> Aug 15, 2024</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <div class="space-y-1">
+                            <span class="inline-block px-2 py-0.5 text-3xs font-semibold rounded bg-gray-900 border border-gray-800 text-gray-300">QA Engineer</span>
+                            <div>
+                                <span class="inline-block px-2 py-0.5 text-2xs font-semibold rounded-full glow-badge-green border-emerald-500 shadow-sm">Expert</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <div class="font-semibold text-gray-300 text-xs">Project Titan</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-semibold text-purple-400">
+                        1 yr 9 mos
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <span class="px-2 py-0.5 text-xs font-semibold rounded-full glow-badge-green">
+                            Active
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-right text-sm">
+                        <button class="edit-emp-btn text-purple-400 hover:text-purple-300 mr-3 transition" data-id="e4">
+                            Edit
+                        </button>
+                        <button class="delete-emp-btn text-red-400 hover:text-red-300 transition" data-id="e4">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            
+                <tr class="border-b border-gray-800 hover:bg-gray-950 hover:bg-opacity-30">
+                    <td class="px-6 py-4 text-gray-200 text-sm">
+                        <div class="font-semibold">Ethan Hunt</div>
+                        <div class="text-xs text-gray-400">Delivery Manager &amp; Tech Lead</div>
+                        <div class="text-3xs text-gray-500 font-medium">ethan.hunt@delivery.com</div>
+                        <div class="text-3xs text-gray-400 mt-1"><span class="font-semibold text-gray-500">Joined:</span> Jun 1, 2023</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <div class="space-y-1">
+                            <span class="inline-block px-2 py-0.5 text-3xs font-semibold rounded bg-gray-900 border border-gray-800 text-gray-300">Team Lead</span>
+                            <div>
+                                <span class="inline-block px-2 py-0.5 text-2xs font-semibold rounded-full glow-badge-green border-emerald-500 shadow-sm">Lead</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <div class="font-semibold text-gray-300 text-xs">Project Titan</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-semibold text-purple-400">
+                        3 yrs 0 mos
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <span class="px-2 py-0.5 text-xs font-semibold rounded-full glow-badge-green">
+                            Active
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-right text-sm">
+                        <button class="edit-emp-btn text-purple-400 hover:text-purple-300 mr-3 transition" data-id="e5">
+                            Edit
+                        </button>
+                        <button class="delete-emp-btn text-red-400 hover:text-red-300 transition" data-id="e5">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            
+                <tr class="border-b border-gray-800 hover:bg-gray-950 hover:bg-opacity-30">
+                    <td class="px-6 py-4 text-gray-200 text-sm">
+                        <div class="font-semibold">Fiona Gallagher</div>
+                        <div class="text-xs text-gray-400">QA Analyst</div>
+                        <div class="text-3xs text-gray-500 font-medium">fiona.gallagher@delivery.com</div>
+                        <div class="text-3xs text-gray-400 mt-1"><span class="font-semibold text-gray-500">Joined:</span> May 12, 2025</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <div class="space-y-1">
+                            <span class="inline-block px-2 py-0.5 text-3xs font-semibold rounded bg-gray-900 border border-gray-800 text-gray-300">QA Engineer</span>
+                            <div>
+                                <span class="inline-block px-2 py-0.5 text-2xs font-semibold rounded-full glow-badge-purple">Intermediate</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <div class="font-semibold text-gray-300 text-xs">Project Nebula</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-semibold text-purple-400">
+                        1 yr 0 mos
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <span class="px-2 py-0.5 text-xs font-semibold rounded-full glow-badge-green">
+                            Active
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-right text-sm">
+                        <button class="edit-emp-btn text-purple-400 hover:text-purple-300 mr-3 transition" data-id="e6">
+                            Edit
+                        </button>
+                        <button class="delete-emp-btn text-red-400 hover:text-red-300 transition" data-id="e6">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            
+                <tr class="border-b border-gray-800 hover:bg-gray-950 hover:bg-opacity-30">
+                    <td class="px-6 py-4 text-gray-200 text-sm">
+                        <div class="font-semibold">George Clark</div>
+                        <div class="text-xs text-gray-400">Backend Java Developer</div>
+                        <div class="text-3xs text-gray-500 font-medium">george.clark@delivery.com</div>
+                        <div class="text-3xs text-gray-400 mt-1"><span class="font-semibold text-gray-500">Joined:</span> Feb 28, 2025</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <div class="space-y-1">
+                            <span class="inline-block px-2 py-0.5 text-3xs font-semibold rounded bg-gray-900 border border-gray-800 text-gray-300">Mid-Level Developer</span>
+                            <div>
+                                <span class="inline-block px-2 py-0.5 text-2xs font-semibold rounded-full glow-badge-purple">Intermediate</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <div class="font-semibold text-gray-300 text-xs">Project Genesis</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-semibold text-purple-400">
+                        1 yr 3 mos
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <span class="px-2 py-0.5 text-xs font-semibold rounded-full glow-badge-green">
+                            Active
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-right text-sm">
+                        <button class="edit-emp-btn text-purple-400 hover:text-purple-300 mr-3 transition" data-id="e7">
+                            Edit
+                        </button>
+                        <button class="delete-emp-btn text-red-400 hover:text-red-300 transition" data-id="e7">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            
+                <tr class="border-b border-gray-800 hover:bg-gray-950 hover:bg-opacity-30">
+                    <td class="px-6 py-4 text-gray-200 text-sm">
+                        <div class="font-semibold">Hannah Abbott</div>
+                        <div class="text-xs text-gray-400">Technical Architect</div>
+                        <div class="text-3xs text-gray-500 font-medium">hannah.abbott@delivery.com</div>
+                        <div class="text-3xs text-gray-400 mt-1"><span class="font-semibold text-gray-500">Joined:</span> Feb 1, 2024</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <div class="space-y-1">
+                            <span class="inline-block px-2 py-0.5 text-3xs font-semibold rounded bg-gray-900 border border-gray-800 text-gray-300">Senior Developer</span>
+                            <div>
+                                <span class="inline-block px-2 py-0.5 text-2xs font-semibold rounded-full glow-badge-green">Senior</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <div class="font-semibold text-gray-300 text-xs">Project Genesis</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-semibold text-purple-400">
+                        2 yrs 4 mos
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        <span class="px-2 py-0.5 text-xs font-semibold rounded-full glow-badge-green">
+                            Active
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 text-right text-sm">
+                        <button class="edit-emp-btn text-purple-400 hover:text-purple-300 mr-3 transition" data-id="e8">
+                            Edit
+                        </button>
+                        <button class="delete-emp-btn text-red-400 hover:text-red-300 transition" data-id="e8">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- VIEW: KPI FRAMEWORKS -->
+        <!-- ------------------------------------------------------------- -->
+        <section id="kpis-view" class="view-section space-y-8 no-print">
+            <header class="border-b border-gray-800 pb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-150 to-gray-400">
+                        KPI Settings
+                    </h2>
+                    <p class="text-xs text-gray-400 mt-1">Define KPI categories and customize score weights per functional role.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <label class="text-xs font-semibold text-gray-400">Select Role Layout:</label>
+                    <select id="kpi-role-select" class="p-2 text-xs glass-input rounded-lg font-bold">
+                        <option value="Senior Developer">Senior Developer</option>
+                        <option value="Mid Senior Role">Mid Senior Role</option>
+                        <option value="Mid-Level Developer">Mid-Level Developer</option>
+                        <option value="Junior Developer">Junior Developer</option>
+                        <option value="QA Engineer">QA Engineer</option>
+                        <option value="Team Lead">Team Lead</option>
+                        <option value="Business Analyst">Business Analyst</option>
+                    </select>
+                </div>
+            </header>
+
+            <!-- Configuration List Panel -->
+            <div class="space-y-4" id="kpis-container">
+                    <div class="category-section mt-6 mb-4">
+                        <h3 class="text-xs font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-300 uppercase tracking-widest border-b border-gray-800 pb-2 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="folder-git-2" aria-hidden="true" class="lucide lucide-folder-git-2 w-4 h-4 text-purple-400"><path d="M18 19a5 5 0 0 1-5-5v8"></path><path d="M9 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v5"></path><circle cx="13" cy="12" r="2"></circle><circle cx="20" cy="19" r="2"></circle></svg> High Impact Delivery
+                        </h3>
+                        <div class="grid grid-cols-1 gap-4 mt-3">
+                
+                        <div class="kpi-config-card bg-gray-900 bg-opacity-50 border border-gray-800 p-4 rounded-xl flex flex-col gap-4" data-id="kpi-adherence">
+                            <div class="flex-grow space-y-3">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                    <div>
+                                        <h4 class="font-extrabold text-gray-200 text-sm">Adherence to Effort Estimate &amp; Project Plan</h4>
+                                        <p class="text-3xs text-gray-500 font-bold uppercase tracking-wider mt-0.5">High Impact Delivery</p>
+                                    </div>
+                                    <div class="w-full md:w-32">
+                                        <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Weight (%)</label>
+                                        <input type="number" min="0" max="100" class="kpi-weight-input w-full px-3 py-1.5 rounded-lg text-sm glass-input font-bold text-purple-400" value="10">
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Definition &amp; Description</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed">Delivering tasks on schedule and taking ownership of commitments.</p>
+                                    </div>
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Common KPI Metric</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed font-medium">≥95% committed items completed on time</p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Role Target (Editable)</label>
+                                    <input type="text" class="kpi-target-input w-full px-3 py-2 rounded-lg text-xs glass-input font-semibold text-gray-200" value="0 missed commitments">
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="kpi-config-card bg-gray-900 bg-opacity-50 border border-gray-800 p-4 rounded-xl flex flex-col gap-4" data-id="kpi-bugs">
+                            <div class="flex-grow space-y-3">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                    <div>
+                                        <h4 class="font-extrabold text-gray-200 text-sm">Application Bugs</h4>
+                                        <p class="text-3xs text-gray-500 font-bold uppercase tracking-wider mt-0.5">High Impact Delivery</p>
+                                    </div>
+                                    <div class="w-full md:w-32">
+                                        <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Weight (%)</label>
+                                        <input type="number" min="0" max="100" class="kpi-weight-input w-full px-3 py-1.5 rounded-lg text-sm glass-input font-bold text-purple-400" value="15">
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Definition &amp; Description</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed">Writing high quality code to minimize production issues.</p>
+                                    </div>
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Common KPI Metric</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed font-medium">100% months with zero critical production bugs, Defect rate ≤ 0.02</p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Role Target (Editable)</label>
+                                    <input type="text" class="kpi-target-input w-full px-3 py-2 rounded-lg text-xs glass-input font-semibold text-gray-200" value="0 bugs">
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="kpi-config-card bg-gray-900 bg-opacity-50 border border-gray-800 p-4 rounded-xl flex flex-col gap-4" data-id="kpi-escalations">
+                            <div class="flex-grow space-y-3">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                    <div>
+                                        <h4 class="font-extrabold text-gray-200 text-sm">Customer Escalations</h4>
+                                        <p class="text-3xs text-gray-500 font-bold uppercase tracking-wider mt-0.5">High Impact Delivery</p>
+                                    </div>
+                                    <div class="w-full md:w-32">
+                                        <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Weight (%)</label>
+                                        <input type="number" min="0" max="100" class="kpi-weight-input w-full px-3 py-1.5 rounded-lg text-sm glass-input font-bold text-purple-400" value="10">
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Definition &amp; Description</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed">Resolving customer inquiries and avoiding escalations.</p>
+                                    </div>
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Common KPI Metric</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed font-medium">100% escalation-free sprints</p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Role Target (Editable)</label>
+                                    <input type="text" class="kpi-target-input w-full px-3 py-2 rounded-lg text-xs glass-input font-semibold text-gray-200" value="0 escalations">
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="kpi-config-card bg-gray-900 bg-opacity-50 border border-gray-800 p-4 rounded-xl flex flex-col gap-4" data-id="kpi-csat">
+                            <div class="flex-grow space-y-3">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                    <div>
+                                        <h4 class="font-extrabold text-gray-200 text-sm">Customer Satisfaction</h4>
+                                        <p class="text-3xs text-gray-500 font-bold uppercase tracking-wider mt-0.5">High Impact Delivery</p>
+                                    </div>
+                                    <div class="w-full md:w-32">
+                                        <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Weight (%)</label>
+                                        <input type="number" min="0" max="100" class="kpi-weight-input w-full px-3 py-1.5 rounded-lg text-sm glass-input font-bold text-purple-400" value="10">
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Definition &amp; Description</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed">Ensuring client/delivery expectations are met.</p>
+                                    </div>
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Common KPI Metric</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed font-medium">Average customer satisfaction ≥ 4.6/5</p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Role Target (Editable)</label>
+                                    <input type="text" class="kpi-target-input w-full px-3 py-2 rounded-lg text-xs glass-input font-semibold text-gray-200" value="5/5">
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="kpi-config-card bg-gray-900 bg-opacity-50 border border-gray-800 p-4 rounded-xl flex flex-col gap-4" data-id="kpi-quality">
+                            <div class="flex-grow space-y-3">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                    <div>
+                                        <h4 class="font-extrabold text-gray-200 text-sm">Quality Attributes</h4>
+                                        <p class="text-3xs text-gray-500 font-bold uppercase tracking-wider mt-0.5">High Impact Delivery</p>
+                                    </div>
+                                    <div class="w-full md:w-32">
+                                        <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Weight (%)</label>
+                                        <input type="number" min="0" max="100" class="kpi-weight-input w-full px-3 py-1.5 rounded-lg text-sm glass-input font-bold text-purple-400" value="10">
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Definition &amp; Description</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed">Maintaining high code standards and peer reviews.</p>
+                                    </div>
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Common KPI Metric</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed font-medium">≥97% PRs merged without major rework, Test coverage ≥80%</p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Role Target (Editable)</label>
+                                    <input type="text" class="kpi-target-input w-full px-3 py-2 rounded-lg text-xs glass-input font-semibold text-gray-200" value="0 major PR rework">
+                                </div>
+                            </div>
+                        </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="category-section mt-6 mb-4">
+                        <h3 class="text-xs font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-300 uppercase tracking-widest border-b border-gray-800 pb-2 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="folder-git-2" aria-hidden="true" class="lucide lucide-folder-git-2 w-4 h-4 text-purple-400"><path d="M18 19a5 5 0 0 1-5-5v8"></path><path d="M9 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v5"></path><circle cx="13" cy="12" r="2"></circle><circle cx="20" cy="19" r="2"></circle></svg> Best Platform / Best Solution
+                        </h3>
+                        <div class="grid grid-cols-1 gap-4 mt-3">
+                
+                        <div class="kpi-config-card bg-gray-900 bg-opacity-50 border border-gray-800 p-4 rounded-xl flex flex-col gap-4" data-id="kpi-agile">
+                            <div class="flex-grow space-y-3">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                    <div>
+                                        <h4 class="font-extrabold text-gray-200 text-sm">Agile Development</h4>
+                                        <p class="text-3xs text-gray-500 font-bold uppercase tracking-wider mt-0.5">Best Platform / Best Solution</p>
+                                    </div>
+                                    <div class="w-full md:w-32">
+                                        <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Weight (%)</label>
+                                        <input type="number" min="0" max="100" class="kpi-weight-input w-full px-3 py-1.5 rounded-lg text-sm glass-input font-bold text-purple-400" value="5">
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Definition &amp; Description</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed">Following Scrum ceremonies and sprint hygiene.</p>
+                                    </div>
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Common KPI Metric</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed font-medium">Process adherence rate</p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Role Target (Editable)</label>
+                                    <input type="text" class="kpi-target-input w-full px-3 py-2 rounded-lg text-xs glass-input font-semibold text-gray-200" value="≥95% adherence">
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="kpi-config-card bg-gray-900 bg-opacity-50 border border-gray-800 p-4 rounded-xl flex flex-col gap-4" data-id="kpi-compliance">
+                            <div class="flex-grow space-y-3">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                    <div>
+                                        <h4 class="font-extrabold text-gray-200 text-sm">Compliance</h4>
+                                        <p class="text-3xs text-gray-500 font-bold uppercase tracking-wider mt-0.5">Best Platform / Best Solution</p>
+                                    </div>
+                                    <div class="w-full md:w-32">
+                                        <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Weight (%)</label>
+                                        <input type="number" min="0" max="100" class="kpi-weight-input w-full px-3 py-1.5 rounded-lg text-sm glass-input font-bold text-purple-400" value="5">
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Definition &amp; Description</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed">Adhering to internal delivery standards.</p>
+                                    </div>
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Common KPI Metric</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed font-medium">Compliance score</p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Role Target (Editable)</label>
+                                    <input type="text" class="kpi-target-input w-full px-3 py-2 rounded-lg text-xs glass-input font-semibold text-gray-200" value="≥98% compliance">
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="kpi-config-card bg-gray-900 bg-opacity-50 border border-gray-800 p-4 rounded-xl flex flex-col gap-4" data-id="kpi-security">
+                            <div class="flex-grow space-y-3">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                    <div>
+                                        <h4 class="font-extrabold text-gray-200 text-sm">Security</h4>
+                                        <p class="text-3xs text-gray-500 font-bold uppercase tracking-wider mt-0.5">Best Platform / Best Solution</p>
+                                    </div>
+                                    <div class="w-full md:w-32">
+                                        <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Weight (%)</label>
+                                        <input type="number" min="0" max="100" class="kpi-weight-input w-full px-3 py-1.5 rounded-lg text-sm glass-input font-bold text-purple-400" value="5">
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Definition &amp; Description</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed">Adhering to safety standards and code analysis.</p>
+                                    </div>
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Common KPI Metric</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed font-medium">Production vulnerabilities rate</p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Role Target (Editable)</label>
+                                    <input type="text" class="kpi-target-input w-full px-3 py-2 rounded-lg text-xs glass-input font-semibold text-gray-200" value="No vulnerabilities in production, ≤1 high vulnerability">
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="kpi-config-card bg-gray-900 bg-opacity-50 border border-gray-800 p-4 rounded-xl flex flex-col gap-4" data-id="kpi-tech-invest">
+                            <div class="flex-grow space-y-3">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                    <div>
+                                        <h4 class="font-extrabold text-gray-200 text-sm">Technology Investment</h4>
+                                        <p class="text-3xs text-gray-500 font-bold uppercase tracking-wider mt-0.5">Best Platform / Best Solution</p>
+                                    </div>
+                                    <div class="w-full md:w-32">
+                                        <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Weight (%)</label>
+                                        <input type="number" min="0" max="100" class="kpi-weight-input w-full px-3 py-1.5 rounded-lg text-sm glass-input font-bold text-purple-400" value="5">
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Definition &amp; Description</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed">Coding modernizations and tech contributions.</p>
+                                    </div>
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Common KPI Metric</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed font-medium">Contributions metric</p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Role Target (Editable)</label>
+                                    <input type="text" class="kpi-target-input w-full px-3 py-2 rounded-lg text-xs glass-input font-semibold text-gray-200" value="≥1 meaningful contribution/month">
+                                </div>
+                            </div>
+                        </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="category-section mt-6 mb-4">
+                        <h3 class="text-xs font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-300 uppercase tracking-widest border-b border-gray-800 pb-2 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="folder-git-2" aria-hidden="true" class="lucide lucide-folder-git-2 w-4 h-4 text-purple-400"><path d="M18 19a5 5 0 0 1-5-5v8"></path><path d="M9 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v5"></path><circle cx="13" cy="12" r="2"></circle><circle cx="20" cy="19" r="2"></circle></svg> High Performing Team
+                        </h3>
+                        <div class="grid grid-cols-1 gap-4 mt-3">
+                
+                        <div class="kpi-config-card bg-gray-900 bg-opacity-50 border border-gray-800 p-4 rounded-xl flex flex-col gap-4" data-id="kpi-accountability">
+                            <div class="flex-grow space-y-3">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                    <div>
+                                        <h4 class="font-extrabold text-gray-200 text-sm">Accountability</h4>
+                                        <p class="text-3xs text-gray-500 font-bold uppercase tracking-wider mt-0.5">High Performing Team</p>
+                                    </div>
+                                    <div class="w-full md:w-32">
+                                        <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Weight (%)</label>
+                                        <input type="number" min="0" max="100" class="kpi-weight-input w-full px-3 py-1.5 rounded-lg text-sm glass-input font-bold text-purple-400" value="10">
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Definition &amp; Description</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed">Taking responsibility for deliverables and goals.</p>
+                                    </div>
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Common KPI Metric</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed font-medium">Commitments met rate</p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Role Target (Editable)</label>
+                                    <input type="text" class="kpi-target-input w-full px-3 py-2 rounded-lg text-xs glass-input font-semibold text-gray-200" value="≥95% commitments met">
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="kpi-config-card bg-gray-900 bg-opacity-50 border border-gray-800 p-4 rounded-xl flex flex-col gap-4" data-id="kpi-coordination">
+                            <div class="flex-grow space-y-3">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                    <div>
+                                        <h4 class="font-extrabold text-gray-200 text-sm">Coordination/Collaboration</h4>
+                                        <p class="text-3xs text-gray-500 font-bold uppercase tracking-wider mt-0.5">High Performing Team</p>
+                                    </div>
+                                    <div class="w-full md:w-32">
+                                        <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Weight (%)</label>
+                                        <input type="number" min="0" max="100" class="kpi-weight-input w-full px-3 py-1.5 rounded-lg text-sm glass-input font-bold text-purple-400" value="5">
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Definition &amp; Description</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed">Fostering developer alignment and teamwork.</p>
+                                    </div>
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Common KPI Metric</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed font-medium">Meaningful contributions/month</p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Role Target (Editable)</label>
+                                    <input type="text" class="kpi-target-input w-full px-3 py-2 rounded-lg text-xs glass-input font-semibold text-gray-200" value="2–3 meaningful contributions/month">
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="kpi-config-card bg-gray-900 bg-opacity-50 border border-gray-800 p-4 rounded-xl flex flex-col gap-4" data-id="kpi-culture">
+                            <div class="flex-grow space-y-3">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                    <div>
+                                        <h4 class="font-extrabold text-gray-200 text-sm">Culture</h4>
+                                        <p class="text-3xs text-gray-500 font-bold uppercase tracking-wider mt-0.5">High Performing Team</p>
+                                    </div>
+                                    <div class="w-full md:w-32">
+                                        <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Weight (%)</label>
+                                        <input type="number" min="0" max="100" class="kpi-weight-input w-full px-3 py-1.5 rounded-lg text-sm glass-input font-bold text-purple-400" value="5">
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Definition &amp; Description</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed">Fostering a positive team dynamic.</p>
+                                    </div>
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Common KPI Metric</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed font-medium">Positive feedback rate</p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Role Target (Editable)</label>
+                                    <input type="text" class="kpi-target-input w-full px-3 py-2 rounded-lg text-xs glass-input font-semibold text-gray-200" value="≥95% positive feedback">
+                                </div>
+                            </div>
+                        </div>
+                    
+                        </div>
+                    </div>
+                
+                    <div class="category-section mt-6 mb-4">
+                        <h3 class="text-xs font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-300 uppercase tracking-widest border-b border-gray-800 pb-2 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="folder-git-2" aria-hidden="true" class="lucide lucide-folder-git-2 w-4 h-4 text-purple-400"><path d="M18 19a5 5 0 0 1-5-5v8"></path><path d="M9 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v5"></path><circle cx="13" cy="12" r="2"></circle><circle cx="20" cy="19" r="2"></circle></svg> Productivity
+                        </h3>
+                        <div class="grid grid-cols-1 gap-4 mt-3">
+                
+                        <div class="kpi-config-card bg-gray-900 bg-opacity-50 border border-gray-800 p-4 rounded-xl flex flex-col gap-4" data-id="kpi-productivity">
+                            <div class="flex-grow space-y-3">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                                    <div>
+                                        <h4 class="font-extrabold text-gray-200 text-sm">Benchmark</h4>
+                                        <p class="text-3xs text-gray-500 font-bold uppercase tracking-wider mt-0.5">Productivity</p>
+                                    </div>
+                                    <div class="w-full md:w-32">
+                                        <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Weight (%)</label>
+                                        <input type="number" min="0" max="100" class="kpi-weight-input w-full px-3 py-1.5 rounded-lg text-sm glass-input font-bold text-purple-400" value="5">
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Definition &amp; Description</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed">Optimizing developer velocity and utilization.</p>
+                                    </div>
+                                    <div class="bg-gray-950 bg-opacity-40 p-3 rounded-lg border border-gray-850">
+                                        <div class="text-3xs font-bold text-gray-500 uppercase tracking-widest mb-1">Common KPI Metric</div>
+                                        <p class="text-xs text-gray-400 leading-relaxed font-medium">Underutilized report rate</p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-3xs font-bold text-gray-500 uppercase tracking-wider mb-1">Role Target (Editable)</label>
+                                    <input type="text" class="kpi-target-input w-full px-3 py-2 rounded-lg text-xs glass-input font-semibold text-gray-200" value="0 underutilized report">
+                                </div>
+                            </div>
+                        </div>
+                    
+                        </div>
+                    </div>
+                </div>
+
+            <!-- Validation Check Bottom Bar -->
+            <div class="glass-card p-5 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-4">
+                    <div>
+                        <span class="text-xs text-gray-400 font-semibold block">Total Weight Target: 100%</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-gray-500 font-medium">Sum of Inputs:</span>
+                            <span id="kpi-weights-total" class="font-bold text-green-400">100%</span>
+                        </div>
+                    </div>
+                    <span id="kpi-weights-error" class="hidden px-2.5 py-1 text-3xs font-extrabold rounded-md bg-red-950 bg-opacity-40 border border-red-900 text-red-400">
+                        SUM MUST EQUAL 100%
+                    </span>
+                </div>
+
+                <div class="flex gap-3 w-full md:w-auto">
+                    <button id="reset-kpis-btn" class="flex-grow md:flex-grow-0 px-4 py-2.5 text-xs font-bold bg-gray-900 border border-gray-800 rounded-xl hover:bg-gray-850 hover:border-gray-700 text-gray-400 hover:text-gray-200 transition">
+                        Reset Defaults
+                    </button>
+                    <button id="save-kpis-btn" class="flex-grow md:flex-grow-0 px-6 py-2.5 text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 rounded-xl transition">
+                        Save Framework
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- VIEW: SETTINGS -->
+        <!-- ------------------------------------------------------------- -->
+        <section id="settings-view" class="view-section space-y-8 no-print">
+            <header class="border-b border-gray-800 pb-6">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-150 to-gray-400">
+                    Platform Settings
+                </h2>
+                <p class="text-xs text-gray-400 mt-1">Configure profile signatures, AI access endpoints, or perform database maintenance.</p>
+            </header>
+
+            <form id="settings-form" class="space-y-6">
+                <!-- Profile Settings -->
+                <div class="glass-card p-6 rounded-2xl space-y-4">
+                    <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider border-b border-gray-850 pb-2">Manager Profile</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Evaluator Signature Name</label>
+                            <input type="text" id="settings-manager-name" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="E.g., Jayasree Kuniyil" required="">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Evaluator Role Title</label>
+                            <input type="text" id="settings-manager-role" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="E.g., Senior Delivery Manager" required="">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API Provider Configuration -->
+                <div class="glass-card p-6 rounded-2xl space-y-4">
+                    <div class="flex items-center gap-3 border-b border-gray-850 pb-2">
+                        <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider">OpenAI Core Integrations</h3>
+                        <span class="px-2 py-0.5 text-3xs font-extrabold rounded bg-purple-950 bg-opacity-40 border border-purple-900 text-purple-400">OPTIONAL</span>
+                    </div>
+                    
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        If you leave these fields empty, the application will use our **smart local feedback engine** to generate qualitative review narratives in real-time. If you fill in a valid key, client-side API requests will fetch responses directly from OpenAI or Azure OpenAI.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">API Secrets (sk-...)</label>
+                            <input type="password" id="settings-api-key" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="Paste OpenAI Key (optional)">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Gateway / Base Endpoint URL</label>
+                            <input type="text" id="settings-api-endpoint" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="https://api.openai.com/v1">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Model Identifier</label>
+                            <select id="settings-api-model" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                                <option value="gpt-4o">gpt-4o (Recommended)</option>
+                                <option value="gpt-4-turbo">gpt-4-turbo</option>
+                                <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Azure Specific Sub-config -->
+                    <div class="space-y-3 pt-3">
+                        <label class="flex items-center gap-2 text-xs font-semibold text-gray-400 cursor-pointer">
+                            <input type="checkbox" id="settings-azure-enabled" class="rounded bg-gray-900 border-gray-800 text-purple-600 focus:ring-purple-500">
+                            <span>Activate Azure OpenAI Service Protocol</span>
+                        </label>
+                        
+                        <div id="azure-deployment-row" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-400 mb-1.5">Azure Deployment Target Name</label>
+                                <input type="text" id="settings-azure-deployment" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="E.g., deployment-gpt-4o">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <button type="submit" class="px-6 py-2.5 text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 rounded-xl transition">
+                        Save Configurations
+                    </button>
+                    
+                    <button type="button" id="reset-db-btn" class="px-5 py-2.5 text-xs font-bold bg-red-950 bg-opacity-40 border border-red-900 rounded-xl hover:bg-opacity-50 text-red-400 transition">
+                        Wipe Database &amp; Seed Defaults
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <!-- ------------------------------------------------------------- -->
+    <!-- COMPONENT: DETAILED PERFORMANCE REPORT CARD MODAL -->
+    <!-- ------------------------------------------------------------- -->
+    <div id="report-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4 bg-black bg-opacity-75">
+        <div class="bg-gray-950 border border-gray-800 rounded-2xl w-full max-w-4xl shadow-2xl p-6 md:p-8 animate-fade-in text-gray-150">
+            <!-- Modal Header (No Print) -->
+            <div class="flex justify-between items-center border-b border-gray-800 pb-4 mb-6 no-print">
+                <h3 class="font-extrabold text-base tracking-wide text-purple-400 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="award" aria-hidden="true" class="lucide lucide-award w-5 h-5"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg> Monthly Performance Review Card
+                </h3>
+                <div class="flex gap-3">
+                    <button id="modal-print-btn" class="px-3 py-1.5 text-xs font-bold bg-gray-900 border border-gray-800 rounded-xl hover:bg-gray-850 hover:border-gray-700 text-gray-300 flex items-center gap-1.5 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="printer" aria-hidden="true" class="lucide lucide-printer w-4 h-4"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"></path><rect x="6" y="14" width="12" height="8" rx="1"></rect></svg> Print / PDF
+                    </button>
+                    <button id="modal-csv-btn" class="px-3 py-1.5 text-xs font-bold bg-gray-900 border border-gray-800 rounded-xl hover:bg-gray-850 hover:border-gray-700 text-gray-300 flex items-center gap-1.5 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="download" aria-hidden="true" class="lucide lucide-download w-4 h-4"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg> Export CSV
+                    </button>
+                    <button id="close-modal-btn" class="px-2.5 py-1.5 text-xs bg-gray-900 hover:bg-gray-850 rounded-xl text-gray-400 hover:text-gray-200 transition">
+                        ✕
+                    </button>
+                </div>
+            </div>
+
+            <!-- PRINTABLE TEMPLATE WORKSPACE -->
+            <div id="report-card-print-area" class="space-y-6">
+                <!-- Header Card Banner -->
+                <div class="flex flex-col md:flex-row justify-between items-start border-b-2 border-purple-500 pb-6 mb-6">
+                    <div class="space-y-1">
+                        <h2 id="modal-employee-name" class="text-2xl md:text-3xl font-extrabold text-white">Employee Name</h2>
+                        <div class="flex flex-wrap items-center gap-2 pt-1 text-xs">
+                            <span id="modal-employee-role" class="px-2.5 py-0.5 rounded-full glow-badge-purple font-semibold">Senior Developer</span>
+                            <span class="text-gray-500 font-bold">•</span>
+                            <span id="modal-project-name" class="text-gray-400 font-semibold">Project Titan</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 md:mt-0 text-left md:text-right space-y-1">
+                        <div class="text-2xs text-gray-500 uppercase tracking-widest font-bold">Review Period</div>
+                        <div id="modal-period" class="font-extrabold text-base text-gray-200">May 2026</div>
+                        <div class="text-3xs text-gray-500 font-medium">Evaluated by: <span id="modal-evaluator" class="text-gray-400 font-semibold">Manager</span></div>
+                    </div>
+                </div>
+
+                <!-- Scores Breakdown Structure -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+                    <!-- Left: Large Circular Gauge -->
+                    <div class="glass-card-no-hover p-6 rounded-2xl flex flex-col items-center justify-center text-center h-full">
+                        <span class="text-2xs text-gray-500 uppercase tracking-widest font-bold mb-4">Overall Performance Index</span>
+                        <div id="modal-score-gauge" class="score-circle text-3xl font-black rounded-full w-28 h-28 border-4 border-purple-500 bg-purple-950 bg-opacity-20 flex items-center justify-center text-purple-300">
+                            <span id="modal-score-value">0.00</span>
+                        </div>
+                        <p class="text-3xs text-gray-500 mt-4 max-w-[150px]">
+                            Scale: 1.0 (Critical) to 5.0 (Distinguished).
+                        </p>
+                    </div>
+
+                    <!-- Right: KPI Score Table -->
+                    <div class="md:col-span-2 glass-card-no-hover overflow-hidden rounded-2xl">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-900 bg-opacity-35 border-b border-gray-850">
+                                    <th class="px-4 py-2.5 text-3xs font-bold uppercase text-gray-400">KPI Dimension</th>
+                                    <th class="px-4 py-2.5 text-center text-3xs font-bold uppercase text-gray-400">Weight</th>
+                                    <th class="px-4 py-2.5 text-center text-3xs font-bold uppercase text-gray-400">Score</th>
+                                    <th class="px-4 py-2.5 text-center text-3xs font-bold uppercase text-gray-400">Contrib</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modal-kpi-breakdown-body" class="divide-y divide-gray-850">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Comments Narrative & Improvements Details -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-gray-850">
+                    <!-- Review narrative -->
+                    <div class="md:col-span-2 space-y-2">
+                        <h4 class="text-xs uppercase font-extrabold tracking-wider text-purple-400">AI Qualitative Summary</h4>
+                        <div id="modal-ai-comments" class="p-4 rounded-xl bg-gray-900 bg-opacity-40 border border-gray-850 min-h-[120px]">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Improvement Goals -->
+                    <div class="space-y-2">
+                        <h4 class="text-xs uppercase font-extrabold tracking-wider text-yellow-500">Development Milestones</h4>
+                        <div id="modal-improvement-areas" class="p-4 rounded-xl bg-gray-900 bg-opacity-40 border border-gray-850 min-h-[120px]">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts Bindings -->
+    <script src="db.js"></script>
+    <script src="app.js"></script>
+    <script>
+        (function() {
+            const main = document.querySelector('main');
+            const dbView = document.getElementById('dashboard-view');
+            const info = document.createElement('div');
+            info.id = 'layout-debug-info';
+            info.style.position = 'fixed';
+            info.style.bottom = '10px';
+            info.style.left = '10px';
+            info.style.color = 'white';
+            info.style.backgroundColor = 'blue';
+            info.style.padding = '10px';
+            info.style.zIndex = '99999';
+            info.innerHTML = 'LAYOUT_DEBUG: main=' + (main ? (main.offsetWidth + 'x' + main.offsetHeight) : 'null') + ', dbView=' + (dbView ? (dbView.offsetWidth + 'x' + dbView.offsetHeight) : 'null') + ', body=' + document.body.offsetWidth + 'x' + document.body.offsetHeight;
+            document.body.appendChild(info);
+        })();
+    </script><div id="layout-debug-info" style="position: fixed; bottom: 10px; left: 10px; color: white; background-color: blue; padding: 10px; z-index: 99999;">LAYOUT_DEBUG: main=756x2166, dbView=708x2118, body=756x2769</div>
+
+
+</body></html>

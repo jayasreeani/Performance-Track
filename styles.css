@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --bg-dark: #0b0f19;
+    --bg-card: rgba(20, 27, 45, 0.7);
+    --bg-card-hover: rgba(28, 38, 62, 0.85);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --primary: #8b5cf6;
+    --primary-glow: rgba(139, 92, 246, 0.15);
+    --primary-light: #a78bfa;
+    --accent: #10b981;
+    --text-main: #f3f4f6;
+    --text-muted: #9ca3af;
+}
+
+/* Light mode overrides if user toggles (configured dynamically) */
+body.light-theme {
+    --bg-dark: #f3f4f6;
+    --bg-card: rgba(255, 255, 255, 0.8);
+    --bg-card-hover: rgba(255, 255, 255, 0.95);
+    --border-color: rgba(0, 0, 0, 0.08);
+    --primary: #6d28d9;
+    --primary-glow: rgba(109, 40, 217, 0.1);
+    --primary-light: #7c3aed;
+    --accent: #059669;
+    --text-main: #1f2937;
+    --text-muted: #4b5563;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-x: hidden;
+}
+
+/* Glassmorphism Styles */
+.glass-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(139, 92, 246, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px 0 rgba(139, 92, 246, 0.1);
+}
+
+.glass-card-no-hover {
+    background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.glass-input {
+    background: rgba(15, 22, 38, 0.5);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    transition: all 0.2s ease;
+}
+
+.glass-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-glow);
+    background: rgba(15, 22, 38, 0.8);
+}
+
+.light-theme .glass-input {
+    background: rgba(255, 255, 255, 0.8);
+    color: #1f2937;
+}
+
+.light-theme .glass-input:focus {
+    background: #ffffff;
+}
+
+/* Custom Navigation Active State */
+.nav-link {
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.nav-link.active {
+    color: var(--primary-light);
+    background: var(--primary-glow);
+    border-left: 3px solid var(--primary);
+}
+
+/* Glowing Badges */
+.glow-badge-purple {
+    background: rgba(139, 92, 246, 0.12);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    color: var(--primary-light);
+    text-shadow: 0 0 8px rgba(139, 92, 246, 0.3);
+}
+
+.glow-badge-green {
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #34d399;
+}
+
+.glow-badge-yellow {
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: #fbbf24;
+}
+
+.glow-badge-red {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #f87171;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(11, 15, 25, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(139, 92, 246, 0.3);
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 92, 246, 0.5);
+}
+
+/* Score Slider Styles */
+input[type="range"].score-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    outline: none;
+}
+
+input[type="range"].score-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    box-shadow: 0 0 8px var(--primary);
+    transition: all 0.15s ease;
+}
+
+input[type="range"].score-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    background: var(--primary-light);
+}
+
+.light-theme input[type="range"].score-slider {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Animation Utilities */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Circular Progress Chart Wrapper */
+.score-circle {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hide sections for SPA router */
+.view-section {
+    display: none;
+}
+
+.view-section.active {
+    display: block;
+}
+
+/* Dashboard Tab buttons */
+.db-tab-btn {
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    background: rgba(15, 22, 38, 0.4);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.db-tab-btn.active {
+    color: #ffffff;
+    background: var(--primary) !important;
+    border-color: var(--primary);
+    box-shadow: 0 0 12px var(--primary-glow);
+}
+
+.light-theme .db-tab-btn {
+    background: rgba(255, 255, 255, 0.5);
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+}
+
+.light-theme .db-tab-btn.active {
+    background: var(--primary) !important;
+    color: #ffffff;
+}
+
+/* Print Overrides for Professional Report Export */
+@media print {
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+    
+    .no-print {
+        display: none !important;
+    }
+    
+    .print-only {
+        display: block !important;
+    }
+    
+    .glass-card, .glass-card-no-hover {
+        background: #ffffff !important;
+        border: 1px solid #cccccc !important;
+        box-shadow: none !important;
+        color: #000000 !important;
+        backdrop-filter: none !important;
+        transform: none !important;
+        page-break-inside: avoid;
+    }
+    
+    .glass-input {
+        background: #ffffff !important;
+        border: 1px solid #777777 !important;
+        color: #000000 !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: #000000 !important;
+    }
+
+    /* Print margins and formatting */
+    @page {
+        margin: 1.5cm;
+    }
+    
+    .print-report-header {
+        border-bottom: 2px solid #333333;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+    }
+}
