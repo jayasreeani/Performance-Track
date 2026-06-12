@@ -10,9 +10,6 @@ import schemas
 import auth
 from database import engine, get_db, SessionLocal
 
-# Create DB tables on startup
-models.Base.metadata.create_all(bind=engine)
-
 app = FastAPI(title="PerfAI API Backend")
 
 # Configure CORS Middleware
@@ -350,12 +347,19 @@ def seed_database(db: Session):
             db.add(evaluation)
         db.commit()
 
-# Run Seeding on Startup
-db = SessionLocal()
-try:
-    seed_database(db)
-finally:
-    db.close()
+@app.on_event("startup")
+def on_startup():
+    try:
+        # Create DB tables on startup
+        models.Base.metadata.create_all(bind=engine)
+        # Run Seeding on Startup
+        db = SessionLocal()
+        try:
+            seed_database(db)
+        finally:
+            db.close()
+    except Exception as e:
+        print(f"Database initialization or seeding error: {e}")
 
 # -----------------------------------------------------------------------------
 # API ROUTE HANDLERS
