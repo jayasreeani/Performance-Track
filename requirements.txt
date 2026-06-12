@@ -1,0 +1,5 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+greenlet
+psycopg2-binary

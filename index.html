@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PerfAI - AI-Powered KPI & Performance Management</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#0b0f19',
+                        panelbg: 'rgba(20, 27, 45, 0.7)',
+                        borderglow: 'rgba(139, 92, 246, 0.2)'
+                    },
+                    fontSize: {
+                        '3xs': '0.6rem',
+                        '2xs': '0.7rem'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom Style System -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen flex flex-col md:flex-row antialiased">
+    <!-- Login Screen (Azure AD Mock) -->
+    <div id="login-screen" class="fixed inset-0 z-50 bg-[#0b0f19] flex items-center justify-center p-4">
+        <!-- Radial background glow -->
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(139,92,246,0.15),transparent_60%)] pointer-events-none"></div>
+        
+        <div class="w-full max-w-md glass-card-no-hover p-8 rounded-2xl border border-gray-800 shadow-2xl relative z-10 space-y-6">
+            <!-- Header Logo -->
+            <div class="text-center space-y-2">
+                <div class="mx-auto w-12 h-12 rounded-xl bg-purple-600 bg-opacity-20 border border-purple-500 shadow-[0_0_15px_rgba(139,92,246,0.3)] flex items-center justify-center mb-2">
+                    <i data-lucide="brain-circuit" class="w-6 h-6 text-purple-400 animate-pulse"></i>
+                </div>
+                <h1 class="text-2xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-300">
+                    PerfAI Portal
+                </h1>
+                <p class="text-xs text-gray-400">KPI Performance Management & Evaluation Hub</p>
+            </div>
+
+            <!-- Login Form / Actions -->
+            <div id="login-form-container" class="space-y-4">
+                <!-- Microsoft SSO Button -->
+                <button type="button" id="sso-login-btn" class="w-full py-3 px-4 bg-white hover:bg-gray-100 text-gray-900 text-sm font-bold rounded-xl flex items-center justify-center gap-3 transition shadow-lg">
+                    <!-- Microsoft Grid Icon (4 squares) -->
+                    <div class="grid grid-cols-2 gap-0.5 w-4 h-4 shrink-0">
+                        <div class="bg-[#f25022] w-1.5 h-1.5"></div>
+                        <div class="bg-[#7fba00] w-1.5 h-1.5"></div>
+                        <div class="bg-[#00a4ef] w-1.5 h-1.5"></div>
+                        <div class="bg-[#ffb900] w-1.5 h-1.5"></div>
+                    </div>
+                    <span>Sign in with Microsoft SSO</span>
+                </button>
+
+                <!-- Divider -->
+                <div class="flex items-center gap-3 my-4">
+                    <div class="h-px bg-gray-800 flex-grow"></div>
+                    <span class="text-3xs font-bold text-gray-500 uppercase tracking-wider">or local credentials</span>
+                    <div class="h-px bg-gray-800 flex-grow"></div>
+                </div>
+
+                <!-- Local Login Form -->
+                <form id="local-login-form" class="space-y-4">
+                    <div>
+                        <label class="block text-3xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Manager Username</label>
+                        <input type="text" id="login-username" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="E.g., jayasree.kuniyil@delivery.com">
+                    </div>
+                    <div>
+                        <label class="block text-3xs font-semibold text-gray-400 uppercase tracking-wider mb-1">Access Token / Password</label>
+                        <input type="password" id="login-password" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="w-full py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold rounded-xl transition shadow-md">
+                        Authorize Local Access
+                    </button>
+                </form>
+            </div>
+
+            <!-- Loader State (Initially Hidden) -->
+            <div id="login-loader" class="hidden flex flex-col items-center justify-center py-8 text-center space-y-4">
+                <i data-lucide="loader-2" class="w-10 h-10 animate-spin text-purple-500 animate-duration-1000"></i>
+                <div>
+                    <h3 id="login-loader-title" class="font-bold text-sm text-gray-200">Connecting to Azure Active Directory...</h3>
+                    <p id="login-loader-desc" class="text-3xs text-gray-500 mt-1">Verifying Microsoft Single Sign-On (SSO) token...</p>
+                </div>
+                <!-- Mock MFA verification step -->
+                <div id="mfa-approval-step" class="hidden p-3 bg-green-950 bg-opacity-20 border border-green-900 text-green-400 rounded-xl flex items-center gap-2 text-2xs font-semibold">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-green-500"></i>
+                    <span>Multi-Factor Authentication Approved!</span>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <p class="text-3xs text-gray-600">Secure corporate login protected by Azure AD SSO.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-full md:w-64 glass-card-no-hover border-r border-gray-800 flex flex-col justify-between shrink-0 no-print">
+        <div>
+            <!-- Header Logo -->
+            <div class="px-6 py-6 border-b border-gray-800 flex items-center gap-3">
+                <div class="p-2 rounded-xl bg-purple-600 bg-opacity-20 border border-purple-500 shadow-[0_0_12px_rgba(139,92,246,0.3)]">
+                    <i data-lucide="brain-circuit" class="w-6 h-6 text-purple-400 animate-pulse"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-lg tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-300">
+                        PerfAI
+                    </h1>
+                    <p class="text-3xs text-gray-500 font-bold uppercase tracking-widest">Performance hub</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="px-3 py-6 space-y-1">
+                <a href="#" class="nav-link active flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 hover:bg-opacity-40 transition" data-view="dashboard">
+                    <i data-lucide="layout-dashboard" class="w-4.5 h-4.5"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 hover:bg-opacity-40 transition" data-view="evaluations">
+                    <i data-lucide="file-spreadsheet" class="w-4.5 h-4.5"></i>
+                    <span>Perform Evaluation</span>
+                </a>
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 hover:bg-opacity-40 transition" data-view="history">
+                    <i data-lucide="history" class="w-4.5 h-4.5"></i>
+                    <span>History & Reports</span>
+                </a>
+                <div class="pt-4 pb-2 px-4 text-3xs font-bold text-gray-500 uppercase tracking-wider">Management</div>
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 hover:bg-opacity-40 transition" data-view="projects">
+                    <i data-lucide="folder-kanban" class="w-4.5 h-4.5"></i>
+                    <span>Projects</span>
+                </a>
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 hover:bg-opacity-40 transition" data-view="employees">
+                    <i data-lucide="users" class="w-4.5 h-4.5"></i>
+                    <span>Team Directory</span>
+                </a>
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 hover:bg-opacity-40 transition" data-view="mentors" id="nav-mentors">
+                    <i data-lucide="user-cog" class="w-4.5 h-4.5"></i>
+                    <span>Manage Mentors</span>
+                </a>
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 hover:bg-opacity-40 transition" data-view="kpis">
+                    <i data-lucide="sliders" class="w-4.5 h-4.5"></i>
+                    <span>KPI Frameworks</span>
+                </a>
+                <a href="#" class="nav-link flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 hover:bg-opacity-40 transition" data-view="settings">
+                    <i data-lucide="settings" class="w-4.5 h-4.5"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer / Manager Profile & Theme & Log out -->
+        <div class="p-4 border-t border-gray-800 space-y-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-purple-700 bg-opacity-30 border border-purple-600 flex items-center justify-center font-bold text-sm text-purple-300">
+                        JK
+                    </div>
+                    <div>
+                        <div id="manager-name-display" class="font-bold text-sm text-gray-200">Manager</div>
+                        <div id="manager-role-display" class="text-3xs text-gray-500">Delivery Manager</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-2">
+                <a href="#" id="theme-toggle" class="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-gray-900 bg-opacity-65 border border-gray-800 hover:border-gray-700 hover:bg-gray-800 text-2xs font-semibold text-gray-400 hover:text-gray-200 transition">
+                    <i id="theme-icon" data-lucide="sun" class="w-3.5 h-3.5 text-yellow-400"></i>
+                    <span id="theme-text">Light</span>
+                </a>
+                <a href="#" id="logout-btn" class="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-red-950 bg-opacity-35 border border-red-900 border-opacity-50 hover:bg-red-900 hover:bg-opacity-40 text-2xs font-semibold text-red-400 hover:text-red-300 transition">
+                    <i data-lucide="log-out" class="w-3.5 h-3.5 shrink-0"></i>
+                    <span>Log Out</span>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Workspace Container -->
+    <main class="flex-grow p-6 md:p-8 overflow-y-auto max-w-7xl mx-auto w-full">
+        <!-- ------------------------------------------------------------- -->
+        <!-- VIEW: DASHBOARD -->
+        <!-- ------------------------------------------------------------- -->
+        <section id="dashboard-view" class="view-section active space-y-8">
+            <header class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-gray-800 pb-6 no-print">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-400" id="dashboard-title">
+                        Performance Tracker
+                    </h2>
+                    <p class="text-xs text-gray-400 mt-1" id="dashboard-subtitle">Monthly employee performance analytics - <span id="total-records-count">0</span> records</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1.5 text-xs text-gray-400 font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
+                        <span>Updated June 2026</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Filters -->
+            <div id="dashboard-filters-row" class="glass-card-no-hover p-4 rounded-xl flex flex-wrap items-center gap-4 no-print border border-gray-800">
+                <div class="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-wider pr-2 border-r border-gray-800">
+                    <i data-lucide="filter" class="w-4 h-4 text-gray-400"></i>
+                    <span>Filters</span>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4 items-center flex-grow sm:flex-grow-0">
+                    <div class="flex items-center gap-2">
+                        <span class="text-3xs text-gray-500 font-bold uppercase tracking-wider">Project</span>
+                        <select id="db-filter-project" class="p-2 text-xs glass-input rounded-lg font-semibold w-40">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="text-3xs text-gray-500 font-bold uppercase tracking-wider">Team</span>
+                        <select id="db-filter-team" class="p-2 text-xs glass-input rounded-lg font-semibold w-40">
+                            <option value="">All Teams</option>
+                            <option value="Senior Developer">Senior Developer</option>
+                            <option value="Mid Senior Role">Mid Senior Role</option>
+                            <option value="Mid-Level Developer">Mid-Level Developer</option>
+                            <option value="Junior Developer">Junior Developer</option>
+                            <option value="QA Engineer">QA Engineer</option>
+                            <option value="Team Lead">Team Lead</option>
+                            <option value="Business Analyst">Business Analyst</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="text-3xs text-gray-500 font-bold uppercase tracking-wider">Month</span>
+                        <select id="db-filter-month" class="p-2 text-xs glass-input rounded-lg font-semibold w-40">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="button" id="db-reset-filters-btn" class="ml-auto px-4 py-2 text-2xs font-bold bg-gray-900 border border-gray-800 rounded-lg hover:bg-gray-850 hover:border-gray-700 text-gray-400 hover:text-gray-200 transition">
+                    Clear Filters
+                </button>
+            </div>
+
+            <!-- Metric Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 no-print">
+                <!-- Card 1: Quality Score -->
+                <div class="glass-card p-5 rounded-2xl relative">
+                    <div class="flex items-center justify-between text-gray-400 mb-3">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Avg Quality Score</span>
+                        <div class="p-1.5 rounded-lg bg-yellow-500 bg-opacity-10 border border-yellow-500 border-opacity-25 flex items-center justify-center">
+                            <i data-lucide="star" class="w-4.5 h-4.5 text-yellow-400"></i>
+                        </div>
+                    </div>
+                    <div id="stat-avg-quality" class="text-3xl font-extrabold text-white">0.0%</div>
+                    <div id="trend-avg-quality" class="text-3xs text-gray-500 font-bold mt-2 flex items-center gap-1">
+                        <span>--</span>
+                    </div>
+                </div>
+
+                <!-- Card 2: On-Time Delivery -->
+                <div class="glass-card p-5 rounded-2xl relative">
+                    <div class="flex items-center justify-between text-gray-400 mb-3">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">On-Time Delivery</span>
+                        <div class="p-1.5 rounded-lg bg-emerald-500 bg-opacity-10 border border-emerald-500 border-opacity-25 flex items-center justify-center">
+                            <i data-lucide="check-square" class="w-4.5 h-4.5 text-emerald-400"></i>
+                        </div>
+                    </div>
+                    <div id="stat-on-time" class="text-3xl font-extrabold text-white">0.0%</div>
+                    <div id="trend-on-time" class="text-3xs text-gray-500 font-bold mt-2 flex items-center gap-1">
+                        <span>--</span>
+                    </div>
+                </div>
+
+                <!-- Card 3: Hours Logged -->
+                <div class="glass-card p-5 rounded-2xl relative">
+                    <div class="flex items-center justify-between text-gray-400 mb-3">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Total Hours Logged</span>
+                        <div class="p-1.5 rounded-lg bg-blue-500 bg-opacity-10 border border-blue-500 border-opacity-25 flex items-center justify-center">
+                            <i data-lucide="clock" class="w-4.5 h-4.5 text-blue-400"></i>
+                        </div>
+                    </div>
+                    <div id="stat-hours-logged" class="text-3xl font-extrabold text-white">0 hrs</div>
+                    <div id="trend-hours-logged" class="text-3xs text-gray-500 font-bold mt-2 flex items-center gap-1">
+                        <span>--</span>
+                    </div>
+                </div>
+
+                <!-- Card 4: Top Performers -->
+                <div class="glass-card p-5 rounded-2xl relative">
+                    <div class="flex items-center justify-between text-gray-400 mb-3">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Top Performers</span>
+                        <div class="p-1.5 rounded-lg bg-purple-500 bg-opacity-10 border border-purple-500 border-opacity-25 flex items-center justify-center">
+                            <i data-lucide="award" class="w-4.5 h-4.5 text-purple-400"></i>
+                        </div>
+                    </div>
+                    <div id="stat-top-performers" class="text-3xl font-extrabold text-white">0 employees</div>
+                    <div id="trend-top-performers" class="text-3xs text-gray-500 font-bold mt-2 flex items-center gap-1">
+                        <span>--</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Sub Navigation Tabs -->
+            <div class="flex flex-wrap items-center gap-2 border-b border-gray-800 pb-3 no-print">
+                <button class="db-tab-btn active px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition" data-tab="overview">
+                    <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
+                    <span>Overview</span>
+                </button>
+                <button class="db-tab-btn px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 text-gray-400 hover:text-white hover:bg-gray-850 hover:bg-opacity-40 transition" data-tab="trends">
+                    <i data-lucide="trending-up" class="w-4 h-4"></i>
+                    <span>Monthly Trends</span>
+                </button>
+                <button class="db-tab-btn px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 text-gray-400 hover:text-white hover:bg-gray-850 hover:bg-opacity-40 transition" data-tab="employee-wise">
+                    <i data-lucide="users" class="w-4 h-4"></i>
+                    <span>Employee Wise</span>
+                </button>
+                <button class="db-tab-btn px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 text-gray-400 hover:text-white hover:bg-gray-850 hover:bg-opacity-40 transition" data-tab="employee-detail">
+                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                    <span>Employee Detail</span>
+                </button>
+            </div>
+
+            <!-- TAB CONTENT: OVERVIEW -->
+            <div id="db-tab-content-overview" class="db-tab-content space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 no-print">
+                    <!-- Left Column -->
+                    <div class="space-y-6">
+                        <!-- Chart 1: Monthly Avg Performance -->
+                        <div class="glass-card p-5 rounded-2xl">
+                            <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider mb-4">Monthly Avg Performance</h3>
+                            <div class="h-64 relative">
+                                <canvas id="chart-monthly-avg"></canvas>
+                            </div>
+                        </div>
+                        
+                        <!-- Chart 2: Avg Hours Logged per Month -->
+                        <div class="glass-card p-5 rounded-2xl">
+                            <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider mb-4">Avg Hours Logged per Month</h3>
+                            <div class="h-64 relative">
+                                <canvas id="chart-hours-logged"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column -->
+                    <div class="space-y-6">
+                        <!-- Chart 3: Rating Distribution -->
+                        <div class="glass-card p-5 rounded-2xl">
+                            <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider mb-4">Rating Distribution</h3>
+                            <div class="h-64 relative">
+                                <canvas id="chart-rating-dist"></canvas>
+                            </div>
+                        </div>
+                        
+                        <!-- Chart 4: Performance by Project -->
+                        <div class="glass-card p-5 rounded-2xl">
+                            <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider mb-4">Performance by Project</h3>
+                            <div class="h-64 relative">
+                                <canvas id="chart-proj-perf"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB CONTENT: MONTHLY TRENDS -->
+            <div id="db-tab-content-trends" class="db-tab-content hidden space-y-6">
+                <div class="glass-card p-5 rounded-2xl">
+                    <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider mb-4">Historical Performance Trends by Project</h3>
+                    <div class="h-96 relative">
+                        <canvas id="chart-detailed-trends"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB CONTENT: EMPLOYEE WISE -->
+            <div id="db-tab-content-employee-wise" class="db-tab-content hidden space-y-6">
+                <div class="glass-card p-5 rounded-2xl space-y-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                        <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider">Employee Performance Aggregates</h3>
+                        <div class="w-full sm:w-64 relative">
+                            <input type="text" id="db-employee-search" class="w-full pl-9 pr-3 py-2 text-xs glass-input rounded-xl" placeholder="Search employee by name...">
+                            <i data-lucide="search" class="w-4 h-4 text-gray-500 absolute left-3 top-2.5"></i>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-gray-800 bg-gray-900 bg-opacity-30">
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Employee</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Functional Role</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Overall Avg Score</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Avg Quality %</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Avg On-Time %</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Est. Hours Logged</th>
+                                </tr>
+                            </thead>
+                            <tbody id="db-employee-wise-table-body" class="divide-y divide-gray-850">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB CONTENT: EMPLOYEE DETAIL -->
+            <div id="db-tab-content-employee-detail" class="db-tab-content hidden space-y-6">
+                <div class="glass-card p-5 rounded-2xl flex flex-col sm:flex-row gap-4 items-center border border-gray-800">
+                    <label class="text-xs font-semibold text-gray-400">Select Employee for Detail View:</label>
+                    <select id="db-detail-employee-select" class="p-2 text-xs glass-input rounded-lg font-bold w-64">
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                
+                <div id="db-detail-workspace" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Profile Card -->
+                    <div class="glass-card p-6 rounded-2xl space-y-6">
+                        <div class="flex items-center gap-4 border-b border-gray-850 pb-4">
+                            <div class="w-14 h-14 rounded-full bg-purple-700 bg-opacity-30 border border-purple-500 flex items-center justify-center font-bold text-lg text-purple-300" id="db-detail-avatar">
+                                JD
+                            </div>
+                            <div>
+                                <h4 class="font-extrabold text-base text-gray-100" id="db-detail-name">John Doe</h4>
+                                <p class="text-xs text-purple-400 font-semibold" id="db-detail-designation">Senior Developer</p>
+                                <p class="text-3xs text-gray-500" id="db-detail-email">john.doe@delivery.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4 text-xs font-medium">
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">Functional Role:</span>
+                                <span class="text-gray-300 font-semibold" id="db-detail-role">Senior Developer</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">Expertise Level:</span>
+                                <span class="text-gray-300 font-semibold" id="db-detail-expertise">Senior</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">Total Experience:</span>
+                                <span class="text-purple-400 font-bold" id="db-detail-experience">2 yrs 4 mos</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">Joining Date:</span>
+                                <span class="text-gray-300" id="db-detail-join-date">March 1, 2024</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-500 block mb-1">Assigned Projects:</span>
+                                <div class="text-gray-300 font-semibold text-2xs leading-relaxed" id="db-detail-projects">
+                                    Project Titan
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- KPI Radar Chart -->
+                    <div class="glass-card p-5 rounded-2xl">
+                        <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider mb-4">KPI Performance Map</h3>
+                        <div class="h-64 relative">
+                            <canvas id="chart-detail-radar"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Score History Chart -->
+                    <div class="glass-card p-5 rounded-2xl">
+                        <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider mb-4">Score History Trend</h3>
+                        <div class="h-64 relative">
+                            <canvas id="chart-detail-history"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="db-detail-empty-state" class="text-center text-gray-500 py-16 bg-gray-900 bg-opacity-30 rounded-2xl border border-dashed border-gray-800">
+                    Select an employee above to load their performance dossier.
+                </div>
+            </div>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- VIEW: EVALUATIONS FORM -->
+        <!-- ------------------------------------------------------------- -->
+        <section id="evaluations-view" class="view-section space-y-8 no-print">
+            <header class="border-b border-gray-800 pb-6">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-400">
+                    Monthly Performance Evaluation
+                </h2>
+                <p class="text-xs text-gray-400 mt-1">Select an employee, grade KPI categories, and generate AI-driven summaries.</p>
+            </header>
+
+            <form id="eval-form" class="space-y-8">
+                <!-- Select Metadata Grid -->
+                <div class="glass-card p-5 rounded-2xl grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1.5">1. Target Project</label>
+                        <select id="eval-project-select" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1.5">2. Employee Name</label>
+                        <select id="eval-employee-select" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                            <option value="">-- Select Project First --</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1.5">3. Evaluation Period</label>
+                        <input type="month" id="eval-period" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1.5">4. Evaluator Name</label>
+                        <input type="text" id="evaluator-name" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="Manager Name">
+                    </div>
+                </div>
+
+                <!-- Main Evaluation Workspace -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                    <!-- Left: Sliders List (takes 2 cols on lg screens) -->
+                    <div class="lg:col-span-2 space-y-4" id="eval-kpis-container">
+                        <div class="text-center text-gray-500 py-8 bg-gray-900 bg-opacity-30 rounded-2xl border border-dashed border-gray-800">
+                            Select an employee to populate KPI indicators.
+                        </div>
+                    </div>
+
+                    <!-- Right: Live Weighted Score Card & AI Trigger -->
+                    <div class="space-y-6 lg:sticky lg:top-6">
+                        <!-- Score Gauge Widget -->
+                        <div class="glass-card p-6 rounded-2xl flex flex-col items-center text-center">
+                            <h3 class="font-bold text-xs uppercase tracking-wider text-gray-400 mb-4">Overall Weighted Score</h3>
+                            <div id="eval-weighted-score-gauge" class="score-circle text-2xl font-black rounded-full w-24 h-24 border-4 border-gray-700 bg-gray-900 flex items-center justify-center text-gray-500">
+                                <span id="eval-weighted-score-value">0.00</span>
+                            </div>
+                            <p class="text-3xs text-gray-500 mt-4 leading-relaxed">
+                                Weighted calculation automatically compiles based on configured role frameworks.
+                            </p>
+                        </div>
+
+                        <!-- AI Panel -->
+                        <div class="glass-card p-6 rounded-2xl space-y-4">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-bold text-xs uppercase tracking-wider text-gray-300">AI-Generated Feedback</h3>
+                                <button type="button" id="generate-ai-comments-btn" class="px-3 py-1.5 text-2xs font-bold text-white bg-purple-600 hover:bg-purple-500 rounded-lg flex items-center gap-1.5 transition">
+                                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                                    <span>Compile Insights</span>
+                                </button>
+                            </div>
+
+                            <!-- Spinner loader -->
+                            <div id="ai-loading-spinner" class="hidden flex items-center justify-center gap-2 p-2 bg-purple-950 bg-opacity-20 border border-purple-900 border-opacity-50 text-purple-300 rounded-lg animate-pulse">
+                                <i data-lucide="loader-2" class="w-4 h-4 animate-spin text-purple-400"></i>
+                                <span class="text-2xs font-semibold">Running AI feedback compiler...</span>
+                            </div>
+
+                            <div>
+                                <label class="block text-3xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Narrative Review</label>
+                                <textarea id="eval-ai-comments" class="w-full p-3 text-xs glass-input rounded-xl font-medium" rows="6" placeholder="Click 'Compile Insights' to generate performance summary..." required></textarea>
+                            </div>
+
+                            <div>
+                                <label class="block text-3xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Development Goals</label>
+                                <textarea id="eval-improvement-areas" class="w-full p-3 text-xs glass-input rounded-xl font-medium" rows="3" placeholder="Actionable milestones..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="w-full py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-sm font-bold rounded-2xl shadow-lg transition">
+                            Save Evaluation
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- VIEW: EVALUATIONS HISTORY -->
+        <!-- ------------------------------------------------------------- -->
+        <section id="history-view" class="view-section space-y-8 no-print">
+            <header class="border-b border-gray-800 pb-6">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-400">
+                    Evaluations & Reports
+                </h2>
+                <p class="text-xs text-gray-400 mt-1">View historical score breakdowns, print audit-ready reports, or export to CSV.</p>
+            </header>
+
+            <!-- Filter Panel -->
+            <div class="glass-card p-5 rounded-2xl flex flex-col md:flex-row gap-4 items-end">
+                <div class="flex-grow grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1.5">Project</label>
+                        <select id="filter-project" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1.5">Employee</label>
+                        <select id="filter-employee" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-400 mb-1.5">Period</label>
+                        <input type="month" id="filter-period" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                    </div>
+                </div>
+                
+                <button type="button" id="reset-filters-btn" class="px-5 py-2.5 text-xs font-bold bg-gray-900 border border-gray-800 rounded-xl hover:bg-gray-850 hover:border-gray-700 text-gray-400 hover:text-gray-200 transition shrink-0">
+                    Reset Filters
+                </button>
+            </div>
+
+            <!-- History Table -->
+            <div class="glass-card overflow-hidden rounded-2xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-gray-800 bg-gray-900 bg-opacity-30">
+                                <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Employee</th>
+                                <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Project</th>
+                                <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Month</th>
+                                <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Weighted Score</th>
+                                <th class="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-gray-400">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body" class="divide-y divide-gray-850">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- VIEW: PROJECTS CRUD -->
+        <!-- ------------------------------------------------------------- -->
+        <section id="projects-view" class="view-section space-y-8 no-print">
+            <header class="border-b border-gray-800 pb-6">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-400">
+                    Project Management
+                </h2>
+                <p class="text-xs text-gray-400 mt-1">Configure client portfolios and tracking groups.</p>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                <!-- Left Form Panel -->
+                <div class="glass-card p-6 rounded-2xl space-y-5">
+                    <h3 id="project-form-title" class="font-bold text-sm uppercase tracking-wider text-gray-300">Add New Project</h3>
+                    <form id="project-form" class="space-y-4">
+                        <input type="hidden" id="project-id">
+                        
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Project Name</label>
+                            <input type="text" id="project-name" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="E.g., Project Titan" required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Description</label>
+                            <textarea id="project-desc" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" rows="3" placeholder="Enter objectives or brief summary..." required></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Status</label>
+                            <select id="project-status" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                                <option value="Active">Active</option>
+                                <option value="Completed">Completed</option>
+                                <option value="On Hold">On Hold</option>
+                            </select>
+                        </div>
+
+                        <div class="flex gap-3 pt-2">
+                            <button type="submit" class="flex-grow py-2.5 text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 rounded-xl transition">
+                                Save Project
+                            </button>
+                            <button type="button" id="project-cancel-btn" class="hidden px-4 py-2.5 text-xs font-bold bg-gray-900 border border-gray-800 rounded-xl hover:bg-gray-850 hover:border-gray-700 text-gray-400 hover:text-gray-200 transition">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Right Table List -->
+                <div class="lg:col-span-2 glass-card overflow-hidden rounded-2xl">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-gray-800 bg-gray-900 bg-opacity-30">
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Project Name</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Description</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Status</th>
+                                    <th class="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-gray-400">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="projects-table-body" class="divide-y divide-gray-850">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- VIEW: EMPLOYEES CRUD -->
+        <!-- ------------------------------------------------------------- -->
+        <section id="employees-view" class="view-section space-y-8 no-print">
+            <header class="border-b border-gray-800 pb-6">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-400">
+                    Team Directory
+                </h2>
+                <p class="text-xs text-gray-400 mt-1">Manage staff assignments, roles, and project mappings.</p>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                <!-- Left Form Panel -->
+                <div class="glass-card p-6 rounded-2xl space-y-5">
+                    <h3 id="employee-form-title" class="font-bold text-sm uppercase tracking-wider text-gray-300">Add Team Member</h3>
+                    <form id="employee-form" class="space-y-4">
+                        <input type="hidden" id="employee-id">
+                        
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Full Name</label>
+                            <input type="text" id="employee-name" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="E.g., John Doe" required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Email Address</label>
+                            <input type="email" id="employee-email" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="john.doe@delivery.com" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Designation</label>
+                            <input type="text" id="employee-designation" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="E.g., Senior Full-Stack Engineer" required>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-400 mb-1.5">Functional Role <span class="text-gray-500 font-normal">(Optional)</span></label>
+                                <select id="employee-role" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                                    <option value="">-- No Role --</option>
+                                    <option value="Senior Developer">Senior Developer</option>
+                                    <option value="Mid Senior Role">Mid Senior Role</option>
+                                    <option value="Mid-Level Developer">Mid-Level Developer</option>
+                                    <option value="Junior Developer">Junior Developer</option>
+                                    <option value="QA Engineer">QA Engineer</option>
+                                    <option value="Team Lead">Team Lead</option>
+                                    <option value="Business Analyst">Business Analyst</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-400 mb-1.5">Expertise Level</label>
+                                <select id="employee-expertise" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                                    <option value="Junior">Junior</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Senior">Senior</option>
+                                    <option value="Expert">Expert</option>
+                                    <option value="Lead">Lead</option>
+                                    <option value="Management">Management</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-400 mb-1.5">Assigned Projects</label>
+                                <div id="employee-projects-container" class="w-full p-2.5 max-h-32 overflow-y-auto glass-input rounded-xl space-y-1">
+                                    <!-- Populated dynamically -->
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-400 mb-1.5">Joining Date</label>
+                                <input type="date" id="employee-joining-date" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" required>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Status</label>
+                            <select id="employee-status" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                        </div>
+
+                        <div class="flex gap-3 pt-2">
+                            <button type="submit" class="flex-grow py-2.5 text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 rounded-xl transition">
+                                Save Member
+                            </button>
+                            <button type="button" id="employee-cancel-btn" class="hidden px-4 py-2.5 text-xs font-bold bg-gray-900 border border-gray-800 rounded-xl hover:bg-gray-850 hover:border-gray-700 text-gray-400 hover:text-gray-200 transition">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Right Table List -->
+                <div class="lg:col-span-2 glass-card overflow-hidden rounded-2xl">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-gray-800 bg-gray-900 bg-opacity-30">
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Employee</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Role & Expertise</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Projects</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Experience</th>
+                                    <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Status</th>
+                                    <th class="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-gray-400">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employees-table-body" class="divide-y divide-gray-850">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- VIEW: KPI FRAMEWORKS -->
+        <!-- ------------------------------------------------------------- -->
+        <section id="kpis-view" class="view-section space-y-8 no-print">
+            <header class="border-b border-gray-800 pb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-400">
+                        KPI Settings
+                    </h2>
+                    <p class="text-xs text-gray-400 mt-1">Define KPI categories and customize score weights per functional role.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <label class="text-xs font-semibold text-gray-400">Select Role Layout:</label>
+                    <select id="kpi-role-select" class="p-2 text-xs glass-input rounded-lg font-bold">
+                        <option value="Senior Developer">Senior Developer</option>
+                        <option value="Mid Senior Role">Mid Senior Role</option>
+                        <option value="Mid-Level Developer">Mid-Level Developer</option>
+                        <option value="Junior Developer">Junior Developer</option>
+                        <option value="QA Engineer">QA Engineer</option>
+                        <option value="Team Lead">Team Lead</option>
+                        <option value="Business Analyst">Business Analyst</option>
+                    </select>
+                </div>
+            </header>
+
+            <!-- Configuration List Panel -->
+            <div class="space-y-4" id="kpis-container">
+                <!-- Populated dynamically -->
+            </div>
+
+            <!-- Validation Check Bottom Bar -->
+            <div class="glass-card p-5 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-4">
+                    <div>
+                        <span class="text-xs text-gray-400 font-semibold block">Total Weight Target: 100%</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-gray-500 font-medium">Sum of Inputs:</span>
+                            <span id="kpi-weights-total" class="font-bold text-green-400 text-sm">100%</span>
+                        </div>
+                    </div>
+                    <span id="kpi-weights-error" class="hidden px-2.5 py-1 text-3xs font-extrabold rounded-md bg-red-950 bg-opacity-40 border border-red-900 text-red-400">
+                        SUM MUST EQUAL 100%
+                    </span>
+                </div>
+
+                <div class="flex gap-3 w-full md:w-auto">
+                    <button id="reset-kpis-btn" class="flex-grow md:flex-grow-0 px-4 py-2.5 text-xs font-bold bg-gray-900 border border-gray-800 rounded-xl hover:bg-gray-850 hover:border-gray-700 text-gray-400 hover:text-gray-200 transition">
+                        Reset Defaults
+                    </button>
+                    <button id="save-kpis-btn" class="flex-grow md:flex-grow-0 px-6 py-2.5 text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 rounded-xl transition">
+                        Save Framework
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- VIEW: SETTINGS -->
+        <!-- ------------------------------------------------------------- -->
+        <section id="settings-view" class="view-section space-y-8 no-print">
+            <header class="border-b border-gray-800 pb-6">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-400">
+                    Platform Settings
+                </h2>
+                <p class="text-xs text-gray-400 mt-1">Configure profile signatures, AI access endpoints, or perform database maintenance.</p>
+            </header>
+
+            <form id="settings-form" class="space-y-6">
+                <!-- Profile Settings -->
+                <div class="glass-card p-6 rounded-2xl space-y-4">
+                    <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider border-b border-gray-850 pb-2">Manager Profile</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Evaluator Signature Name</label>
+                            <input type="text" id="settings-manager-name" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="E.g., Jayasree Kuniyil" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Evaluator Role Title</label>
+                            <input type="text" id="settings-manager-role" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="E.g., Senior Delivery Manager" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API Provider Configuration -->
+                <div class="glass-card p-6 rounded-2xl space-y-4">
+                    <div class="flex items-center gap-3 border-b border-gray-850 pb-2">
+                        <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider">OpenAI Core Integrations</h3>
+                        <span class="px-2 py-0.5 text-3xs font-extrabold rounded bg-purple-950 bg-opacity-40 border border-purple-900 text-purple-400">OPTIONAL</span>
+                    </div>
+                    
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        If you leave these fields empty, the application will use our **smart local feedback engine** to generate qualitative review narratives in real-time. If you fill in a valid key, client-side API requests will fetch responses directly from OpenAI or Azure OpenAI.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">API Secrets (sk-...)</label>
+                            <input type="password" id="settings-api-key" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="Paste OpenAI Key (optional)">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Gateway / Base Endpoint URL</label>
+                            <input type="text" id="settings-api-endpoint" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="https://api.openai.com/v1">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Model Identifier</label>
+                            <select id="settings-api-model" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                                <option value="gpt-4o">gpt-4o (Recommended)</option>
+                                <option value="gpt-4-turbo">gpt-4-turbo</option>
+                                <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Azure Specific Sub-config -->
+                    <div class="space-y-3 pt-3">
+                        <label class="flex items-center gap-2 text-xs font-semibold text-gray-400 cursor-pointer">
+                            <input type="checkbox" id="settings-azure-enabled" class="rounded bg-gray-900 border-gray-800 text-purple-600 focus:ring-purple-500">
+                            <span>Activate Azure OpenAI Service Protocol</span>
+                        </label>
+                        
+                        <div id="azure-deployment-row" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-gray-400 mb-1.5">Azure Deployment Target Name</label>
+                                <input type="text" id="settings-azure-deployment" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="E.g., deployment-gpt-4o">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-4">
+                    <button type="submit" class="px-6 py-2.5 text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 rounded-xl transition">
+                        Save Configurations
+                    </button>
+                    
+                    <button type="button" id="reset-db-btn" class="px-5 py-2.5 text-xs font-bold bg-red-950 bg-opacity-40 border border-red-900 rounded-xl hover:bg-opacity-50 text-red-400 transition">
+                        Wipe Database & Seed Defaults
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- ------------------------------------------------------------- -->
+        <!-- VIEW: MENTOR DIRECTORY (ADMIN ONLY) -->
+        <!-- ------------------------------------------------------------- -->
+        <section id="mentors-view" class="view-section space-y-8 no-print">
+            <header class="border-b border-gray-800 pb-6">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-400">
+                    Manage Mentors
+                </h2>
+                <p class="text-xs text-gray-400 mt-1">Register and authorize mentors who can enter performance metrics for their team members.</p>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                <!-- Left Form Panel -->
+                <div class="glass-card p-6 rounded-2xl space-y-5">
+                    <h3 id="mentor-form-title" class="font-bold text-sm uppercase tracking-wider text-gray-300">Add Mentor</h3>
+                    <form id="mentor-form" class="space-y-4">
+                        <input type="hidden" id="mentor-id">
+                        
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Full Name</label>
+                            <input type="text" id="mentor-name" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="E.g., Alice Smith" required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Email Address</label>
+                            <input type="email" id="mentor-email" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="alice@delivery.com" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Password</label>
+                            <input type="password" id="mentor-password" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium" placeholder="Enter password" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-400 mb-1.5">Role Type</label>
+                            <select id="mentor-role" class="w-full p-2.5 text-sm glass-input rounded-xl font-medium">
+                                <option value="Mentor">Mentor (Default)</option>
+                                <option value="Manager">Administrator (Manager)</option>
+                            </select>
+                        </div>
+
+                        <div class="flex gap-3 pt-2">
+                            <button type="submit" class="flex-grow py-2.5 text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 rounded-xl transition">
+                                Save Mentor
+                            </button>
+                            <button type="button" id="mentor-cancel-btn" class="hidden px-4 py-2.5 text-xs font-bold bg-gray-900 border border-gray-800 rounded-xl hover:bg-gray-850 hover:border-gray-700 text-gray-400 hover:text-gray-200 transition">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Right Table List -->
+                <div class="lg:col-span-2 glass-card overflow-hidden rounded-2xl">
+                    <div class="px-6 py-4 border-b border-gray-850 flex items-center justify-between">
+                        <h3 class="font-bold text-sm text-gray-300 uppercase tracking-wider">Authorized Users & Mentors</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-gray-850 bg-gray-900 bg-opacity-50 text-gray-400 text-3xs font-extrabold uppercase tracking-wider">
+                                    <th class="px-6 py-4">Name</th>
+                                    <th class="px-6 py-4">Email</th>
+                                    <th class="px-6 py-4">Role</th>
+                                    <th class="px-6 py-4 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mentors-table-body" class="divide-y divide-gray-850 text-xs text-gray-300">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ------------------------------------------------------------- -->
+    <!-- COMPONENT: DETAILED PERFORMANCE REPORT CARD MODAL -->
+    <!-- ------------------------------------------------------------- -->
+    <div id="report-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4 bg-black bg-opacity-75">
+        <div class="bg-gray-950 border border-gray-800 rounded-2xl w-full max-w-4xl shadow-2xl p-6 md:p-8 animate-fade-in text-gray-200">
+            <!-- Modal Header (No Print) -->
+            <div class="flex justify-between items-center border-b border-gray-800 pb-4 mb-6 no-print">
+                <h3 class="font-extrabold text-base tracking-wide text-purple-400 flex items-center gap-2">
+                    <i data-lucide="award" class="w-5 h-5"></i> Monthly Performance Review Card
+                </h3>
+                <div class="flex gap-3">
+                    <button id="modal-print-btn" class="px-3 py-1.5 text-xs font-bold bg-gray-900 border border-gray-800 rounded-xl hover:bg-gray-850 hover:border-gray-700 text-gray-300 flex items-center gap-1.5 transition">
+                        <i data-lucide="printer" class="w-4 h-4"></i> Print / PDF
+                    </button>
+                    <button id="modal-csv-btn" class="px-3 py-1.5 text-xs font-bold bg-gray-900 border border-gray-800 rounded-xl hover:bg-gray-850 hover:border-gray-700 text-gray-300 flex items-center gap-1.5 transition">
+                        <i data-lucide="download" class="w-4 h-4"></i> Export CSV
+                    </button>
+                    <button id="close-modal-btn" class="px-2.5 py-1.5 text-xs bg-gray-900 hover:bg-gray-850 rounded-xl text-gray-400 hover:text-gray-200 transition">
+                        ✕
+                    </button>
+                </div>
+            </div>
+
+            <!-- PRINTABLE TEMPLATE WORKSPACE -->
+            <div id="report-card-print-area" class="space-y-6">
+                <!-- Header Card Banner -->
+                <div class="flex flex-col md:flex-row justify-between items-start border-b-2 border-purple-500 pb-6 mb-6">
+                    <div class="space-y-1">
+                        <h2 id="modal-employee-name" class="text-2xl md:text-3xl font-extrabold text-white">Employee Name</h2>
+                        <div class="flex flex-wrap items-center gap-2 pt-1 text-xs">
+                            <span id="modal-employee-role" class="px-2.5 py-0.5 rounded-full glow-badge-purple font-semibold">Senior Developer</span>
+                            <span class="text-gray-500 font-bold">•</span>
+                            <span id="modal-project-name" class="text-gray-400 font-semibold">Project Titan</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 md:mt-0 text-left md:text-right space-y-1">
+                        <div class="text-2xs text-gray-500 uppercase tracking-widest font-bold">Review Period</div>
+                        <div id="modal-period" class="font-extrabold text-base text-gray-200">May 2026</div>
+                        <div class="text-3xs text-gray-500 font-medium">Evaluated by: <span id="modal-evaluator" class="text-gray-400 font-semibold">Manager</span></div>
+                    </div>
+                </div>
+
+                <!-- Scores Breakdown Structure -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+                    <!-- Left: Large Circular Gauge -->
+                    <div class="glass-card-no-hover p-6 rounded-2xl flex flex-col items-center justify-center text-center h-full">
+                        <span class="text-2xs text-gray-500 uppercase tracking-widest font-bold mb-4">Overall Performance Index</span>
+                        <div id="modal-score-gauge" class="score-circle text-3xl font-black rounded-full w-28 h-28 border-4 border-purple-500 bg-purple-950 bg-opacity-20 flex items-center justify-center text-purple-300">
+                            <span id="modal-score-value">0.00</span>
+                        </div>
+                        <p class="text-3xs text-gray-500 mt-4 max-w-[150px]">
+                            Scale: 1.0 (Critical) to 5.0 (Distinguished).
+                        </p>
+                    </div>
+
+                    <!-- Right: KPI Score Table -->
+                    <div class="md:col-span-2 glass-card-no-hover overflow-hidden rounded-2xl">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-900 bg-opacity-35 border-b border-gray-850">
+                                    <th class="px-4 py-2.5 text-3xs font-bold uppercase text-gray-400">KPI Dimension</th>
+                                    <th class="px-4 py-2.5 text-center text-3xs font-bold uppercase text-gray-400">Weight</th>
+                                    <th class="px-4 py-2.5 text-center text-3xs font-bold uppercase text-gray-400">Score</th>
+                                    <th class="px-4 py-2.5 text-center text-3xs font-bold uppercase text-gray-400">Contrib</th>
+                                </tr>
+                            </thead>
+                            <tbody id="modal-kpi-breakdown-body" class="divide-y divide-gray-850">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Comments Narrative & Improvements Details -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-gray-850">
+                    <!-- Review narrative -->
+                    <div class="md:col-span-2 space-y-2">
+                        <h4 class="text-xs uppercase font-extrabold tracking-wider text-purple-400">AI Qualitative Summary</h4>
+                        <div id="modal-ai-comments" class="p-4 rounded-xl bg-gray-900 bg-opacity-40 border border-gray-850 min-h-[120px]">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Improvement Goals -->
+                    <div class="space-y-2">
+                        <h4 class="text-xs uppercase font-extrabold tracking-wider text-yellow-500">Development Milestones</h4>
+                        <div id="modal-improvement-areas" class="p-4 rounded-xl bg-gray-900 bg-opacity-40 border border-gray-850 min-h-[120px]">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts Bindings -->
+    <script src="db.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

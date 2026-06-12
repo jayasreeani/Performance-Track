@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: perfai_tracker
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount data directory to persist the SQLite database
+      - ./data:/app/data
+    environment:
+      # Override DATABASE_URL to use the persistent volume path
+      - DATABASE_URL=sqlite:////app/data/app.db
+    restart: always
