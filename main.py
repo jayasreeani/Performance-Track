@@ -451,43 +451,50 @@ def get_employees(db: Session = Depends(get_db)):
 
 @app.post("/api/employees", response_model=schemas.Employee)
 def create_employee(employee: schemas.EmployeeCreate, db: Session = Depends(get_db)):
-    # Check if update or create
-    db_emp = db.query(models.Employee).filter(models.Employee.id == employee.id).first()
-    
-    pids = employee.project_ids or employee.projectIds or []
-    
-    if db_emp:
-        db_emp.name = employee.name
-        db_emp.email = employee.email
-        db_emp.role = employee.role
-        db_emp.designation = employee.designation
-        db_emp.joining_date = employee.joining_date
-        db_emp.expertise = employee.expertise
-        db_emp.status = employee.status
-        db_emp.project_ids = pids
-        db.commit()
-        db.refresh(db_emp)
-        db_emp.projectIds = db_emp.project_ids
-        db_emp.projectId = db_emp.project_ids[0] if db_emp.project_ids else ""
-        return db_emp
+    try:
+        # Check if update or create
+        db_emp = db.query(models.Employee).filter(models.Employee.id == employee.id).first()
+        
+        pids = employee.project_ids or employee.projectIds or []
+        
+        if db_emp:
+            db_emp.name = employee.name
+            db_emp.email = employee.email
+            db_emp.role = employee.role
+            db_emp.designation = employee.designation
+            db_emp.joining_date = employee.joining_date
+            db_emp.expertise = employee.expertise
+            db_emp.status = employee.status
+            db_emp.project_ids = pids
+            db.commit()
+            db.refresh(db_emp)
+            db_emp.projectIds = db_emp.project_ids
+            db_emp.projectId = db_emp.project_ids[0] if db_emp.project_ids else ""
+            return db_emp
 
-    new_emp = models.Employee(
-        id=employee.id,
-        name=employee.name,
-        email=employee.email,
-        role=employee.role,
-        designation=employee.designation,
-        joining_date=employee.joining_date,
-        expertise=employee.expertise,
-        status=employee.status,
-        project_ids=pids
-    )
-    db.add(new_emp)
-    db.commit()
-    db.refresh(new_emp)
-    new_emp.projectIds = new_emp.project_ids
-    new_emp.projectId = new_emp.project_ids[0] if new_emp.project_ids else ""
-    return new_emp
+        new_emp = models.Employee(
+            id=employee.id,
+            name=employee.name,
+            email=employee.email,
+            role=employee.role,
+            designation=employee.designation,
+            joining_date=employee.joining_date,
+            expertise=employee.expertise,
+            status=employee.status,
+            project_ids=pids
+        )
+        db.add(new_emp)
+        db.commit()
+        db.refresh(new_emp)
+        new_emp.projectIds = new_emp.project_ids
+        new_emp.projectId = new_emp.project_ids[0] if new_emp.project_ids else ""
+        return new_emp
+    except Exception as e:
+        import traceback
+        tb = traceback.format_exc()
+        print("API Error in create_employee:")
+        print(tb)
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}\nTraceback:\n{tb}")
 
 @app.put("/api/employees/{id}", response_model=schemas.Employee)
 def update_employee(id: str, employee: schemas.EmployeeCreate, db: Session = Depends(get_db)):
